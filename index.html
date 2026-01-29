@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         :root {
-            --app-bg: #e9f0ea; /* Pale green background from your design */
+            --app-bg: #e9f0ea;
             --card-radius: 28px;
             --primary-green: #2e7d32;
-            --nav-bg: rgba(233, 240, 234, 0.95);
         }
 
         body {
@@ -49,7 +48,6 @@
             align-items: center;
             justify-content: center;
             border: 1px solid #c8d6cb;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
 
         .logo-text {
@@ -67,10 +65,9 @@
             gap: 14px;
             width: 92%;
             max-width: 500px;
-            padding-bottom: 100px; /* Space for bottom nav */
+            padding-bottom: 110px;
         }
 
-        /* Visual Cards */
         .card {
             background: white;
             border-radius: var(--card-radius);
@@ -78,10 +75,7 @@
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             position: relative;
-            transition: transform 0.2s ease;
         }
-
-        .card:active { transform: scale(0.96); }
 
         .card img {
             width: 100%;
@@ -100,7 +94,6 @@
             text-align: center;
             font-size: 13px;
             font-weight: 600;
-            color: #333;
         }
 
         /* Bottom Tab Navigation */
@@ -109,7 +102,7 @@
             bottom: 0;
             width: 100%;
             max-width: 500px;
-            background: var(--nav-bg);
+            background: rgba(233, 240, 234, 0.95);
             display: flex;
             justify-content: space-around;
             padding: 12px 0 28px 0;
@@ -124,7 +117,6 @@
             align-items: center;
             color: #70757a;
             cursor: pointer;
-            text-decoration: none;
             flex: 1;
         }
 
@@ -132,16 +124,10 @@
             font-size: 28px;
             padding: 6px 20px;
             border-radius: 20px;
-            transition: all 0.3s ease;
         }
 
-        .nav-item span {
-            font-size: 11px;
-            margin-top: 4px;
-            font-weight: 500;
-        }
+        .nav-item span { font-size: 11px; margin-top: 4px; }
 
-        /* Active State Style */
         .nav-item.active { color: var(--primary-green); }
         .nav-item.active .material-symbols-rounded {
             background-color: #d3e3d4;
@@ -149,25 +135,18 @@
             font-variation-settings: 'FILL' 1;
         }
 
-        /* Loader */
-        #loader {
-            margin-top: 50px;
-            color: var(--primary-green);
-            font-weight: 600;
-        }
+        #loader { margin-top: 50px; color: var(--primary-green); font-weight: 600; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <span class="material-symbols-rounded" style="color:#6b4fbb">widgets</span>
-        <div class="search-container">
-            <span class="logo-text">Walla</span>
-        </div>
+        <div class="search-container"><span class="logo-text">Walla</span></div>
         <span class="material-symbols-rounded" style="color:#6b4fbb">search</span>
     </div>
 
-    <div id="loader">Loading wallpapers...</div>
+    <div id="loader">Loading...</div>
     <div class="grid" id="gallery"></div>
 
     <nav class="bottom-nav">
@@ -179,22 +158,14 @@
             <span class="material-symbols-rounded">category</span>
             <span>Category</span>
         </div>
-        <div class="nav-item">
-            <span class="material-symbols-rounded">folder</span>
-            <span>Library</span>
-        </div>
-        <div class="nav-item">
-            <span class="material-symbols-rounded">bookmark</span>
-            <span>Saved</span>
-        </div>
+        <div class="nav-item"><span class="material-symbols-rounded">folder</span><span>Library</span></div>
+        <div class="nav-item"><span class="material-symbols-rounded">bookmark</span><span>Saved</span></div>
     </nav>
 
 <script type="module">
-  // Import Firebase Modules
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-  // Your Firebase Configuration
   const firebaseConfig = {
     apiKey: "AIzaSyD_2znAEmhkSGrXm_TImB3h1zmHfdctJSI",
     authDomain: "walla-59ccc.firebaseapp.com",
@@ -205,23 +176,17 @@
     appId: "1:589698040631:web:d84bf33cc9b0d72b0a90b2"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-
   const gallery = document.getElementById('gallery');
   const loader = document.getElementById('loader');
 
-  /**
-   * Fetches data from Firebase and updates UI
-   * @param {string} path - Database node ('Items' or 'Catagory')
-   * @param {boolean} isCat - If true, displays text labels on cards
-   */
-  function fetchData(path, isCat) {
+  // Unified function to fetch data
+  function fetchData(nodePath, isCategoryView) {
     loader.style.display = 'block';
-    const dataRef = ref(db, path);
+    const contentRef = ref(db, nodePath);
 
-    onValue(dataRef, (snapshot) => {
+    onValue(contentRef, (snapshot) => {
       const data = snapshot.val();
       gallery.innerHTML = '';
       loader.style.display = 'none';
@@ -232,48 +197,35 @@
           const card = document.createElement('div');
           card.className = 'card';
           
-          // Logic to handle different database structures
-          const imgUrl = isCat ? item.Catagory_img : item.Image_Url;
-          const labelText = isCat ? item.Catagory : '';
+          // Wall node uses Image_Url, Catagory node uses Catagory_img
+          const imgUrl = isCategoryView ? item.Catagory_img : item.Image_Url;
+          const label = isCategoryView ? `<div class="card-label">${item.Catagory}</div>` : '';
 
-          card.innerHTML = `
-            <img src="${imgUrl}" alt="Walla Content" loading="lazy">
-            ${isCat ? `<div class="card-label">${labelText}</div>` : ''}
-          `;
-
-          // Optional: Add click to view full image logic here
+          card.innerHTML = `<img src="${imgUrl}" loading="lazy">${label}`;
           gallery.appendChild(card);
         });
-      } else {
-        gallery.innerHTML = '<p>No items found.</p>';
       }
     });
   }
 
-  // --- Navigation Logic ---
+  // Event Listeners for Bottom Nav
+  document.getElementById('nav-wall').onclick = function() {
+    updateActive(this);
+    fetchData('Wall', false); // Fetch from "Wall" node
+  };
 
-  const wallBtn = document.getElementById('nav-wall');
-  const catBtn = document.getElementById('nav-cat');
+  document.getElementById('nav-cat').onclick = function() {
+    updateActive(this);
+    fetchData('Catagory', true); // Fetch from "Catagory" node
+  };
 
-  wallBtn.addEventListener('click', () => {
-    switchTab(wallBtn, 'Items', false);
-  });
-
-  catBtn.addEventListener('click', () => {
-    switchTab(catBtn, 'Catagory', true);
-  });
-
-  function switchTab(clickedEl, path, isCat) {
-    // UI Update
-    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-    clickedEl.classList.add('active');
-    
-    // Data Update
-    fetchData(path, isCat);
+  function updateActive(el) {
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    el.classList.add('active');
   }
 
   // Initial Load
-  fetchData('Items', false);
+  fetchData('Wall', false);
 
 </script>
 </body>
