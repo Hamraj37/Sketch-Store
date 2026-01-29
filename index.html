@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walla App</title>
+    <title>Walla - Wallpaper App</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         :root {
-            --app-bg: #e9f0ea;
-            --card-radius: 24px;
+            --app-bg: #e9f0ea; /* Pale green background from your design */
+            --card-radius: 28px;
+            --primary-green: #2e7d32;
+            --nav-bg: rgba(233, 240, 234, 0.95);
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--app-bg);
             margin: 0;
-            padding-bottom: 90px;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
 
-        /* Top Header */
+        /* Top Navigation Header */
         .top-nav {
             width: 90%;
             max-width: 500px;
@@ -30,87 +33,127 @@
             align-items: center;
             justify-content: space-between;
             padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background-color: var(--app-bg);
+            z-index: 10;
         }
 
         .search-container {
             flex-grow: 1;
             background: white;
-            height: 45px;
+            height: 48px;
             margin: 0 15px;
-            border-radius: 25px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid #c8d6cb;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
 
-        /* Grid Layout */
+        .logo-text {
+            font-weight: 700;
+            font-size: 22px;
+            background: linear-gradient(45deg, #4285f4, #ea4335, #fbbc05, #34a853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Main Grid */
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 14px;
             width: 92%;
             max-width: 500px;
+            padding-bottom: 100px; /* Space for bottom nav */
         }
 
+        /* Visual Cards */
         .card {
             background: white;
             border-radius: var(--card-radius);
-            aspect-ratio: 0.7;
+            aspect-ratio: 0.72;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             position: relative;
+            transition: transform 0.2s ease;
         }
+
+        .card:active { transform: scale(0.96); }
 
         .card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .card-label {
             position: absolute;
             bottom: 0;
             width: 100%;
-            background: rgba(255,255,255,0.9);
-            padding: 8px 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(5px);
+            padding: 10px 0;
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
+            color: #333;
         }
 
-        /* Bottom Navigation */
+        /* Bottom Tab Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             width: 100%;
             max-width: 500px;
-            background: rgba(233, 240, 234, 0.98);
+            background: var(--nav-bg);
             display: flex;
             justify-content: space-around;
-            padding: 10px 0 20px 0;
-            border-top: 1px solid #d3e3d4;
+            padding: 12px 0 28px 0;
+            backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            z-index: 100;
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #5f6368;
+            color: #70757a;
             cursor: pointer;
             text-decoration: none;
-            transition: 0.2s;
+            flex: 1;
         }
 
-        .nav-item.active { color: #2e7d32; }
-        
-        .nav-item .material-symbols-rounded { font-size: 28px; }
-
-        .active-pill {
-            background: #d3e3d4;
+        .nav-item .material-symbols-rounded {
+            font-size: 28px;
+            padding: 6px 20px;
             border-radius: 20px;
-            padding: 4px 20px;
-            margin-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Active State Style */
+        .nav-item.active { color: var(--primary-green); }
+        .nav-item.active .material-symbols-rounded {
+            background-color: #d3e3d4;
+            color: var(--primary-green);
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Loader */
+        #loader {
+            margin-top: 50px;
+            color: var(--primary-green);
+            font-weight: 600;
         }
     </style>
 </head>
@@ -119,30 +162,39 @@
     <div class="top-nav">
         <span class="material-symbols-rounded" style="color:#6b4fbb">widgets</span>
         <div class="search-container">
-            <span style="color: #4285f4; font-weight: bold; font-size: 18px;">Walla</span>
+            <span class="logo-text">Walla</span>
         </div>
         <span class="material-symbols-rounded" style="color:#6b4fbb">search</span>
     </div>
 
+    <div id="loader">Loading wallpapers...</div>
     <div class="grid" id="gallery"></div>
 
     <nav class="bottom-nav">
-        <div class="nav-item active" id="btn-all">
-            <div class="active-pill" id="pill-all"><span class="material-symbols-rounded">home</span></div>
-            <span style="font-size: 10px; font-weight: bold;">Wallpaper</span>
+        <div class="nav-item active" id="nav-wall">
+            <span class="material-symbols-rounded">home</span>
+            <span>Wallpaper</span>
         </div>
-        <div class="nav-item" id="btn-cat">
-            <div class="" id="pill-cat"><span class="material-symbols-rounded">category</span></div>
-            <span style="font-size: 10px; font-weight: bold;">Category</span>
+        <div class="nav-item" id="nav-cat">
+            <span class="material-symbols-rounded">category</span>
+            <span>Category</span>
         </div>
-        <div class="nav-item"><span class="material-symbols-rounded">folder</span></div>
-        <div class="nav-item"><span class="material-symbols-rounded">bookmark</span></div>
+        <div class="nav-item">
+            <span class="material-symbols-rounded">folder</span>
+            <span>Library</span>
+        </div>
+        <div class="nav-item">
+            <span class="material-symbols-rounded">bookmark</span>
+            <span>Saved</span>
+        </div>
     </nav>
 
 <script type="module">
+  // Import Firebase Modules
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+  // Your Firebase Configuration
   const firebaseConfig = {
     apiKey: "AIzaSyD_2znAEmhkSGrXm_TImB3h1zmHfdctJSI",
     authDomain: "walla-59ccc.firebaseapp.com",
@@ -153,16 +205,26 @@
     appId: "1:589698040631:web:d84bf33cc9b0d72b0a90b2"
   };
 
+  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-  const gallery = document.getElementById('gallery');
 
-  // Function to load data from a specific path
-  function loadData(path, isCategoryView) {
+  const gallery = document.getElementById('gallery');
+  const loader = document.getElementById('loader');
+
+  /**
+   * Fetches data from Firebase and updates UI
+   * @param {string} path - Database node ('Items' or 'Catagory')
+   * @param {boolean} isCat - If true, displays text labels on cards
+   */
+  function fetchData(path, isCat) {
+    loader.style.display = 'block';
     const dataRef = ref(db, path);
+
     onValue(dataRef, (snapshot) => {
       const data = snapshot.val();
-      gallery.innerHTML = ''; 
+      gallery.innerHTML = '';
+      loader.style.display = 'none';
 
       if (data) {
         Object.keys(data).forEach(key => {
@@ -170,42 +232,49 @@
           const card = document.createElement('div');
           card.className = 'card';
           
-          // Use Catagory_img for categories, and Image_Url for items
-          const imgUrl = isCategoryView ? item.Catagory_img : item.Image_Url;
-          const label = isCategoryView ? `<div class="card-label">${item.Catagory}</div>` : '';
+          // Logic to handle different database structures
+          const imgUrl = isCat ? item.Catagory_img : item.Image_Url;
+          const labelText = isCat ? item.Catagory : '';
 
-          card.innerHTML = `<img src="${imgUrl}" alt="wall">${label}`;
+          card.innerHTML = `
+            <img src="${imgUrl}" alt="Walla Content" loading="lazy">
+            ${isCat ? `<div class="card-label">${labelText}</div>` : ''}
+          `;
+
+          // Optional: Add click to view full image logic here
           gallery.appendChild(card);
         });
+      } else {
+        gallery.innerHTML = '<p>No items found.</p>';
       }
     });
   }
 
-  // Initial Load (Show All Items)
-  loadData('Items', false);
+  // --- Navigation Logic ---
 
-  // Navigation Click Events
-  document.getElementById('btn-all').onclick = () => {
-    setActive('btn-all', 'pill-all');
-    loadData('Items', false);
-  };
+  const wallBtn = document.getElementById('nav-wall');
+  const catBtn = document.getElementById('nav-cat');
 
-  document.getElementById('btn-cat').onclick = () => {
-    setActive('btn-cat', 'pill-cat');
-    loadData('Catagory', true);
-  };
+  wallBtn.addEventListener('click', () => {
+    switchTab(wallBtn, 'Items', false);
+  });
 
-  function setActive(btnId, pillId) {
-    // Reset classes
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    document.getElementById('pill-all').classList.remove('active-pill');
-    document.getElementById('pill-cat').classList.remove('active-pill');
+  catBtn.addEventListener('click', () => {
+    switchTab(catBtn, 'Catagory', true);
+  });
+
+  function switchTab(clickedEl, path, isCat) {
+    // UI Update
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    clickedEl.classList.add('active');
     
-    // Set active
-    document.getElementById(btnId).classList.add('active');
-    document.getElementById(pillId).classList.add('active-pill');
+    // Data Update
+    fetchData(path, isCat);
   }
-</script>
 
+  // Initial Load
+  fetchData('Items', false);
+
+</script>
 </body>
 </html>
