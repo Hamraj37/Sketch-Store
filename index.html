@@ -3,31 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walla DB Live View</title>
+    <title>Walla Gallery</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding: 40px; }
-        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h1 { color: #1a73e8; font-size: 24px; margin-bottom: 10px; }
-        #status { font-size: 14px; color: #666; margin-bottom: 20px; }
-        pre { background: #2d2d2d; color: #7ec699; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; line-height: 1.5; }
-        .dot { height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .online { background-color: #4caf50; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        h1 { color: #333; margin-bottom: 5px; }
+        .status { font-size: 12px; color: #4caf50; font-weight: bold; }
+        
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Category Card Style */
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-5px); }
+        
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            background: #eee;
+        }
+        
+        .card-info { padding: 15px; text-align: center; }
+        .card-title { font-weight: bold; color: #222; margin: 0; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h1>Walla Database Content</h1>
-    <div id="status"><span id="status-dot" class="dot"></span> Connecting to Firebase...</div>
-    <pre id="data-display">Waiting for data...</pre>
+<div class="header">
+    <h1>Walla Categories</h1>
+    <div class="status">● Live Sync Active</div>
 </div>
 
+<div class="grid" id="gallery">
+    </div>
+
 <script type="module">
-  // 1. Import Firebase SDKs
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-  // 2. Your Specific Configuration
   const firebaseConfig = {
     apiKey: "AIzaSyD_2znAEmhkSGrXm_TImB3h1zmHfdctJSI",
     authDomain: "walla-59ccc.firebaseapp.com",
@@ -35,33 +61,34 @@
     projectId: "walla-59ccc",
     storageBucket: "walla-59ccc.appspot.com",
     messagingSenderId: "589698040631",
-    appId: "1:589698040631:web:d84bf33cc9b0d72b0a90b2",
-    measurementId: "G-9J1Q1G6E5N"
+    appId: "1:589698040631:web:d84bf33cc9b0d72b0a90b2"
   };
 
-  // 3. Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
+  const catRef = ref(db, 'Catagory'); // Targeting the Catagory node specifically
 
-  // 4. Reference the data and listen for changes
-  const dataRef = ref(db, '/'); // Listening to the root node
-
-  onValue(dataRef, (snapshot) => {
+  onValue(catRef, (snapshot) => {
     const data = snapshot.val();
-    const display = document.getElementById('data-display');
-    const statusText = document.getElementById('status');
-    const statusDot = document.getElementById('status-dot');
+    const gallery = document.getElementById('gallery');
+    gallery.innerHTML = ''; // Clear current view
 
     if (data) {
-        display.textContent = JSON.stringify(data, null, 2);
-        statusText.innerHTML = '<span class="dot online"></span> Live sync active';
-    } else {
-        display.textContent = "Database is currently empty.";
-        statusText.innerText = "Connected, but no data found.";
+        Object.keys(data).forEach(key => {
+            const item = data[key];
+            
+            // Create the HTML for each card
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <img src="${item.Catagory_img}" alt="${item.Catagory}" onerror="this.src='https://via.placeholder.com/200x150?text=No+Image'">
+                <div class="card-info">
+                    <p class="card-title">${item.Catagory}</p>
+                </div>
+            `;
+            gallery.appendChild(card);
+        });
     }
-  }, (error) => {
-    console.error(error);
-    document.getElementById('data-display').textContent = "Error: Check your Database Rules.";
   });
 </script>
 
