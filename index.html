@@ -3,64 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Data Display</title>
+    <title>Walla DB Live View</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        #data-container { margin-top: 20px; white-space: pre-wrap; background: #eee; padding: 15px; border-radius: 4px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding: 40px; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h1 { color: #1a73e8; font-size: 24px; margin-bottom: 10px; }
+        #status { font-size: 14px; color: #666; margin-bottom: 20px; }
+        pre { background: #2d2d2d; color: #7ec699; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; line-height: 1.5; }
+        .dot { height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .online { background-color: #4caf50; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Walla DB Content</h1>
-    <div id="status">Loading data...</div>
-    <div id="data-container"></div>
+<div class="card">
+    <h1>Walla Database Content</h1>
+    <div id="status"><span id="status-dot" class="dot"></span> Connecting to Firebase...</div>
+    <pre id="data-display">Waiting for data...</pre>
 </div>
 
 <script type="module">
-  // Import the functions you need from the SDKs you need
+  // 1. Import Firebase SDKs
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-  // TODO: Replace the following with your app's Firebase project configuration
+  // 2. Your Specific Configuration
   const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
+    apiKey: "AIzaSyD_2znAEmhkSGrXm_TImB3h1zmHfdctJSI",
     authDomain: "walla-59ccc.firebaseapp.com",
     databaseURL: "https://walla-59ccc-default-rtdb.firebaseio.com",
     projectId: "walla-59ccc",
     storageBucket: "walla-59ccc.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    messagingSenderId: "589698040631",
+    appId: "1:589698040631:web:d84bf33cc9b0d72b0a90b2",
+    measurementId: "G-9J1Q1G6E5N"
   };
 
-  // Initialize Firebase
+  // 3. Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // Reference to the root of your database (or a specific path like 'users/')
-  const contentRef = ref(db, '/'); 
+  // 4. Reference the data and listen for changes
+  const dataRef = ref(db, '/'); // Listening to the root node
 
-  // Listen for data in real-time
-  onValue(contentRef, (snapshot) => {
+  onValue(dataRef, (snapshot) => {
     const data = snapshot.val();
-    const displayDiv = document.getElementById('data-container');
-    const statusDiv = document.getElementById('status');
+    const display = document.getElementById('data-display');
+    const statusText = document.getElementById('status');
+    const statusDot = document.getElementById('status-dot');
 
     if (data) {
-        statusDiv.innerText = "Data updated just now:";
-        // This converts the JSON object to a readable string for display
-        displayDiv.textContent = JSON.stringify(data, null, 2);
+        display.textContent = JSON.stringify(data, null, 2);
+        statusText.innerHTML = '<span class="dot online"></span> Live sync active';
     } else {
-        statusDiv.innerText = "No data found at this path.";
-        displayDiv.textContent = "{}";
+        display.textContent = "Database is currently empty.";
+        statusText.innerText = "Connected, but no data found.";
     }
   }, (error) => {
-    document.getElementById('status').innerText = "Error: " + error.message;
+    console.error(error);
+    document.getElementById('data-display').textContent = "Error: Check your Database Rules.";
   });
 </script>
 
 </body>
 </html>
-
