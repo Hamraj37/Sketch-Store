@@ -211,7 +211,7 @@
   // Event Listeners for Bottom Nav
   document.getElementById('nav-wall').onclick = function() {
     updateActive(this);
-    fetchData('Wall', false); // Fetch from "Wall" node
+    fetchData('wall', false); // Fetch from "Wall" node
   };
 
   document.getElementById('nav-cat').onclick = function() {
@@ -225,7 +225,7 @@
   }
 
   // Initial Load
-  fetchData('Wall', false);
+  fetchData('wall', false);
 
 </script>
 </body>
