@@ -3,52 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walla Gallery</title>
+    <title>Walla App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; }
-        .header { text-align: center; margin-bottom: 30px; }
-        h1 { color: #333; margin-bottom: 5px; }
-        .status { font-size: 12px; color: #4caf50; font-weight: bold; }
-        
+        :root {
+            --app-bg: #e9f0ea; /* Pale green background from your screenshot */
+            --card-radius: 24px;
+            --primary: #1e1e1e;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--app-bg);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px; /* Space for bottom nav */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Top Header & Search Bar */
+        .top-nav {
+            width: 90%;
+            max-width: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+
+        .search-container {
+            flex-grow: 1;
+            background: white;
+            height: 45px;
+            margin: 0 15px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            border: 1px solid #c8d6cb;
+        }
+
+        .logo-text {
+            font-weight: bold;
+            font-size: 20px;
+            color: #4285f4; /* Blue/Pink theme from logo */
+        }
+
         /* Grid Layout */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns like screenshot */
+            gap: 12px;
+            width: 92%;
+            max-width: 500px;
         }
 
-        /* Category Card Style */
+        /* App-Style Cards */
         .card {
             background: white;
-            border-radius: 15px;
+            border-radius: var(--card-radius);
+            aspect-ratio: 0.75; /* Tall portraits */
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .card:hover { transform: translateY(-5px); }
-        
+
         .card img {
             width: 100%;
-            height: 150px;
+            height: 100%;
             object-fit: cover;
-            background: #eee;
         }
-        
-        .card-info { padding: 15px; text-align: center; }
-        .card-title { font-weight: bold; color: #222; margin: 0; }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            background: rgba(233, 240, 234, 0.95);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 25px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #5f6368;
+            font-size: 11px;
+            text-decoration: none;
+        }
+
+        .nav-item.active { color: #2e7d32; }
+        .nav-item .material-symbols-rounded { font-size: 28px; margin-bottom: 4px; }
+        .active-bg { background: #d3e3d4; border-radius: 20px; padding: 4px 16px; }
+
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>Walla Categories</h1>
-    <div class="status">● Live Sync Active</div>
-</div>
-
-<div class="grid" id="gallery">
+    <div class="top-nav">
+        <span class="material-symbols-rounded" style="color:#6b4fbb">widgets</span>
+        <div class="search-container">
+            <span style="color: #4285f4; font-weight: bold; font-size: 18px; margin: auto;">Walla</span>
+        </div>
+        <span class="material-symbols-rounded" style="color:#6b4fbb">search</span>
     </div>
+
+    <div class="grid" id="gallery">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <div class="active-bg"><span class="material-symbols-rounded">home</span></div>
+            <span>Wallpaper</span>
+        </a>
+        <a href="#" class="nav-item"><span class="material-symbols-rounded">category</span></a>
+        <a href="#" class="nav-item"><span class="material-symbols-rounded">folder</span></a>
+        <a href="#" class="nav-item"><span class="material-symbols-rounded">layers</span></a>
+        <a href="#" class="nav-item"><span class="material-symbols-rounded">bookmark</span></a>
+    </nav>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -66,26 +150,19 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-  const catRef = ref(db, 'Catagory'); // Targeting the Catagory node specifically
+  const catRef = ref(db, 'Catagory');
 
   onValue(catRef, (snapshot) => {
     const data = snapshot.val();
     const gallery = document.getElementById('gallery');
-    gallery.innerHTML = ''; // Clear current view
+    gallery.innerHTML = ''; 
 
     if (data) {
         Object.keys(data).forEach(key => {
             const item = data[key];
-            
-            // Create the HTML for each card
             const card = document.createElement('div');
             card.className = 'card';
-            card.innerHTML = `
-                <img src="${item.Catagory_img}" alt="${item.Catagory}" onerror="this.src='https://via.placeholder.com/200x150?text=No+Image'">
-                <div class="card-info">
-                    <p class="card-title">${item.Catagory}</p>
-                </div>
-            `;
+            card.innerHTML = `<img src="${item.Catagory_img}" alt="${item.Catagory}">`;
             gallery.appendChild(card);
         });
     }
