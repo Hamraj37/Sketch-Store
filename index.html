@@ -198,7 +198,7 @@
           card.className = 'card';
           
           // Wall node uses Image_Url, Catagory node uses Catagory_img
-          const imgUrl = isCategoryView ? item.Catagory_img : item.Image_Url;
+          const imgUrl = isCategoryView ? item.Catagory_img : item.Wallpaper;
           const label = isCategoryView ? `<div class="card-label">${item.Catagory}</div>` : '';
 
           card.innerHTML = `<img src="${imgUrl}" loading="lazy">${label}`;
