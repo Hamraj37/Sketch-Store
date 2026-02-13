@@ -11,46 +11,46 @@ const firebaseConfig = {
 };
 
 database.ref('projects').on('value', (snapshot) => {
-    const slider = document.getElementById('recent-slider');
-    const projectList = document.getElementById('project-list');
-    
-    slider.innerHTML = '';
-    projectList.innerHTML = '';
+    const slider = document.getElementById('recent-slider');
+    const projectList = document.getElementById('project-list');
+    
+    slider.innerHTML = '';
+    projectList.innerHTML = '';
 
-    const projects = [];
-    snapshot.forEach((child) => {
-        projects.push(child.val());
-    });
+    const projects = [];
+    snapshot.forEach((child) => {
+        projects.push(child.val());
+    });
 
-    // Firebase pushes are chronological; reversing gives you the newest first
-    const reversedProjects = [...projects].reverse();
+    // Reverse to get the most recent projects first
+    const recentProjects = [...projects].reverse();
 
-    // 1. Populate the Horizontal Slider with the 5 most recent
-    reversedProjects.slice(0, 5).forEach((data) => {
-        slider.innerHTML += `
-            <div class="slider-item">
-                <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/100?text=Logo'">
-                <h3 style="margin:5px 0;">${data.projectName}</h3>
-                <span style="font-size:12px; color:#666;">By ${data.userName}</span>
-            </div>
-        `;
-    });
+    // 1. Populate Slider with top 5
+    recentProjects.slice(0, 5).forEach((data) => {
+        slider.innerHTML += `
+            <div class="slider-item">
+                <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/100'">
+                <h3>${data.projectName}</h3>
+                <span style="font-size:12px; color:#777;">By ${data.userName}</span>
+            </div>
+        `;
+    });
 
-    // 2. Populate the Vertical All Projects list
-    projects.forEach((data) => {
-        projectList.innerHTML += `
-            <div class="project-card">
-                <div class="project-icon">
-                    <img src="${data.logoUrl}" style="width:60px; height:60px; border-radius:12px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/60'">
-                </div>
-                <div class="project-info">
-                    <h3 style="margin:0;">${data.projectName}</h3>
-                    <div style="display:flex; align-items:center; gap:8px; margin-top:5px;">
-                        <img src="${data.profilePicUrl}" style="width:20px; height:20px; border-radius:50%;" onerror="this.style.display='none'">
-                        <span style="font-size:14px; color:#555;">${data.userName}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
+    // 2. Populate Main List with everything
+    projects.forEach((data) => {
+        projectList.innerHTML += `
+            <div class="project-card">
+                <div class="project-icon">
+                    <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/60'">
+                </div>
+                <div class="project-info">
+                    <h3>${data.projectName}</h3>
+                    <div class="author">
+                        <img src="${data.profilePicUrl}" class="avatar-img" onerror="this.style.display='none'">
+                        <span>${data.userName}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
 });
