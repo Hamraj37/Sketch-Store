@@ -1,75 +1,33 @@
-/* 1. Center the entire app on the screen */
 body {
     background-color: #ffffff;
-    font-family: 'Segoe UI', sans-serif;
     margin: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers horizontally */
-    min-height: 100vh;
+    justify-content: center; /* Centers the app-container horizontally */
 }
 
-/* 2. Container for the content */
 .app-container {
-    width: 90%; /* Responsive width */
-    max-width: 450px; /* Keeps it looking like a phone */
+    width: 100%;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers all children (search, banner, cards) */
-    padding-top: 20px;
-    padding-bottom: 100px; /* Space for the bottom nav */
+    align-items: center; /* Centers children inside the container */
+    padding: 20px;
 }
 
-/* 3. Center Search Bar Content */
-.search-container {
+.content-wrapper {
     width: 100%;
     display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: center; /* Centers the dynamically loaded cards */
+    gap: 15px;
 }
 
-.search-container input {
-    width: 100%;
-    padding: 15px 25px;
-    border-radius: 30px;
-    border: none;
-    background: #f1f1f1;
-    text-align: left; /* Keep text left-aligned inside the bar */
-}
-
-/* 4. Center Banner Content */
-.banner {
-    width: 100%;
-    background: #eeeeee;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center; /* Center image horizontally */
-    align-items: center;     /* Center image vertically */
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.banner img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* 5. Project Card Layout */
 .project-card {
-    width: 100%; /* Spans the width of the container */
-    background: #eeeeee;
+    width: 95%; /* Slightly less than 100% for padding effect */
+    background: #f1f1f1;
     border-radius: 15px;
     padding: 15px;
     display: flex;
-    align-items: center; /* Vertically centers the icon with the text */
-    gap: 15px;
-    box-sizing: border-box;
-}
-
-/* 6. Author Row Centering */
-.author {
-    display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 5px;
+    gap: 15px;
 }
