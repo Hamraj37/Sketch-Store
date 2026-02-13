@@ -1,35 +1,38 @@
+/* General Layout Fixes */
 body {
-    background-color: #f8f9fd;
-    font-family: 'Segoe UI', sans-serif;
+    background-color: #ffffff; /* Brighter background like the app */
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
 }
 
 .app-container {
     width: 100%;
-    max-width: 400px; /* Mimics a mobile screen */
-    padding: 20px;
-    position: relative;
-    min-height: 100vh;
+    max-width: 500px; 
+    padding: 15px;
+    box-sizing: border-box; /* Prevents horizontal scroll */
 }
 
-/* Search Bar */
+/* Fix Search Bar Height & Color */
 .search-container input {
     width: 100%;
-    padding: 15px;
-    border-radius: 25px;
+    padding: 12px 20px;
+    border-radius: 30px;
     border: none;
-    background: #eeeeee;
-    font-size: 16px;
-    margin-bottom: 20px;
+    background: #f1f1f1; /* Match the soft grey */
+    font-size: 15px;
+    margin-bottom: 15px;
+    outline: none;
 }
 
-/* Banner Card */
+/* Fix Banner Scaling */
 .banner {
     background: #eeeeee;
-    border-radius: 15px;
-    height: 250px;
+    border-radius: 12px;
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Maintains consistent shape */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,65 +40,53 @@ body {
     overflow: hidden;
 }
 
-/* Project List Card */
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the "Modded By" image isn't cut off */
+}
+
+/* Fix Project Card Alignment */
 .project-card {
     background: #eeeeee;
-    border-radius: 15px;
-    padding: 15px;
+    border-radius: 12px;
+    padding: 12px;
     display: flex;
-    align-items: center;
-    gap: 15px;
+    align-items: flex-start; /* Aligns items to the top */
+    gap: 12px;
 }
 
 .project-icon img {
-    width: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 10px;
+    background-color: #ddd; /* Placeholder color if image fails */
+    object-fit: cover;
 }
 
-.author {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #555;
+.project-info h3 {
+    margin: 0 0 8px 0; /* Tightens text spacing */
+    font-size: 18px;
+    color: #000;
 }
 
-.avatar {
-    background: #0084ff;
-    color: white;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-}
-
-/* Floating Button */
-.upload-btn {
-    position: fixed;
-    bottom: 100px;
-    right: 20px;
-    background: #dee5ff;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 15px;
-    font-weight: bold;
-    color: #3f51b5;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-/* Bottom Nav */
+/* Bottom Nav Fix */
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: #f0f2f5;
+    background: #f8f9fa;
     display: flex;
     justify-content: space-around;
-    padding: 15px 0;
-    border-top: 1px solid #ddd;
+    padding: 10px 0 25px 0; /* Added padding for modern gesture bars */
+    border-top: 1px solid #eee;
+    z-index: 100;
 }
 
+.nav-item {
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    flex: 1;
+}
