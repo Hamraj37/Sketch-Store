@@ -10,21 +10,38 @@
 </head>
 <body>
 <div class="app-container">
-    <div class="search-container">
-        <input type="text" id="projectSearch" name="search" placeholder="Search for projects..." autocomplete="off">
+    <div class="search-bar">
+        <i class="menu-icon">☰</i>
+        <input type="text" placeholder="Search for projects...">
+        <i class="search-icon">🔍</i>
     </div>
 
-    <h2 class="section-title">Recent Projects</h2>
-    <div id="recent-slider" class="slider-container">
+    <div class="content">
+        <div class="banner-card">
+            <img src="https://raw.githubusercontent.com/Hamraj37/Sketch-Store/main/banner.png" alt="Modded By Hamraj">
         </div>
 
-    <h2 class="section-title">All Projects</h2>
-    <div id="project-list"></div>
+        <div id="project-list">
+            </div>
+    </div>
+
+    <button class="fab">
+        <span>↑ Upload project</span>
+    </button>
 
     <nav class="bottom-nav">
-        <div class="nav-item">Projects</div>
-        <div class="nav-item active">Store</div>
-        <div class="nav-item">Profile</div>
+        <div class="nav-item">
+            <div class="icon">list</div>
+            <span>Projects</span>
+        </div>
+        <div class="nav-item active">
+            <div class="icon-pill">S</div>
+            <span>Store</span>
+        </div>
+        <div class="nav-item">
+            <div class="icon">person</div>
+            <span>Profile</span>
+        </div>
     </nav>
 </div>
     <script src="script.js"></script>
