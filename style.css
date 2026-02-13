@@ -16,7 +16,7 @@ body {
 }
 
 /* Ensure the list fills the width and stays centered */
-#project-list {
+.project-list {
     width: 100%;
     display: flex;
     flex-direction: column;
