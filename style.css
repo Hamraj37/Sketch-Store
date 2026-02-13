@@ -35,3 +35,45 @@ body {
     gap: 15px;
     box-sizing: border-box;
 }
+
+.section-title {
+    width: 95%;
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+}
+
+.slider-container {
+    width: 100%;
+    display: flex;
+    overflow-x: auto; /* Enables horizontal scroll */
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding: 10px 0 20px 0;
+    scrollbar-width: none; /* Hides scrollbar on Firefox */
+}
+
+.slider-container::-webkit-scrollbar {
+    display: none; /* Hides scrollbar on Chrome/Safari */
+}
+
+.slider-item {
+    flex: 0 0 80%; /* Each slide takes up 80% of the screen width */
+    background: #eeeeee;
+    border-radius: 20px;
+    padding: 15px;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content inside the slide */
+    text-align: center;
+}
+
+.slider-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    background: #ccc;
+}
