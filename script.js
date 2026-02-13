@@ -10,32 +10,34 @@ const firebaseConfig = {
   measurementId: "G-01HG0WPLRK"
 };
 
-// Initialize Firebase
+// Initialize Firebase (using your config from before)
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
-// Reference to your projects in the database
-const projectsRef = database.ref('projects'); 
+const projectList = document.getElementById('project-list');
 
-// Fetch data and update UI
-projectsRef.on('value', (snapshot) => {
-    const projectList = document.getElementById('project-list');
-    projectList.innerHTML = ''; // Clear current list
-
+// Listen for data from the "projects" node
+database.ref('projects').on('value', (snapshot) => {
+    projectList.innerHTML = ''; 
+    
     snapshot.forEach((childSnapshot) => {
         const data = childSnapshot.val();
         
-        // Create the HTML for each project card
-        const card = `
+        // Creating the card using the exact keys from your Firebase screenshot
+        const cardHTML = `
             <div class="project-card">
-                <img src="${data.iconUrl || 'placeholder.png'}" style="width:60px; height:60px; border-radius:10px;">
-                <div class="info">
-                    <h3 style="margin:0;">${data.name}</h3>
-                    <p style="margin:0; color:gray;">By ${data.author}</p>
+                <div class="project-icon">
+                    <img src="${data.logoUrl}" alt="icon" onerror="this.src='https://via.placeholder.com/60'">
+                </div>
+                <div class="project-info">
+                    <h3>${data.projectName}</h3>
+                    <div class="author-row">
+                        <img src="${data.profilePicUrl}" class="avatar" onerror="this.style.display='none'">
+                        <span>${data.userName}</span>
+                    </div>
                 </div>
             </div>
         `;
-        projectList.innerHTML += card;
+        projectList.innerHTML += cardHTML;
     });
 });
-
