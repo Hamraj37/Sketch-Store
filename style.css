@@ -144,6 +144,6 @@ body {
     background: #eee;
 }
 
-#project-list {
+.project-list {
     display: contents;
 }
