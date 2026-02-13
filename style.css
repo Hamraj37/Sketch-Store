@@ -144,10 +144,7 @@ body {
     background: #eee;
 }
 
-.project-list {
+.project-listbg {
     display: contents;
 }
 
-element.style {
-    display: contents;
-}
