@@ -1,4 +1,4 @@
-// Your provided configuration
+// Your specific Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyBmYKT5JOfH4NiAzzNWL1u_P3bkbbv6dWo",
   authDomain: "sketchware-pro-fe44e.firebaseapp.com",
@@ -10,38 +10,35 @@ const firebaseConfig = {
   measurementId: "G-01HG0WPLRK"
 };
 
-// Initialize Firebase
+// Start Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
+// Get the container
 const projectList = document.getElementById('project-list');
 
-// Listen for data in the "projects" node
+// Read data from "projects" node
 database.ref('projects').on('value', (snapshot) => {
     projectList.innerHTML = ''; 
-    
-    if (snapshot.exists()) {
-        snapshot.forEach((childSnapshot) => {
-            const data = childSnapshot.val();
-            
-            // Generate card using the EXACT keys from your Firebase screenshot
-            const cardHTML = `
-                <div class="project-card">
-                    <div class="project-icon">
-                        <img src="${data.logoUrl}" alt="logo" onerror="this.src='https://via.placeholder.com/60'">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-name">${data.projectName}</h3>
-                        <div class="author-row">
-                            <img src="${data.profilePicUrl}" class="avatar" onerror="this.style.display='none'">
-                            <span>${data.userName}</span>
-                        </div>
+
+    snapshot.forEach((childSnapshot) => {
+        const data = childSnapshot.val();
+        
+        // Creating the card using your database keys: logoUrl, projectName, userName
+        const cardHTML = `
+            <div class="project-card" onclick="window.open('${data.swbUrl}', '_blank')">
+                <div class="project-icon">
+                    <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/60'">
+                </div>
+                <div class="project-details">
+                    <h3>${data.projectName}</h3>
+                    <div class="author-info">
+                        <img src="${data.profilePicUrl}" class="user-avatar" onerror="this.style.display='none'">
+                        <span>${data.userName}</span>
                     </div>
                 </div>
-            `;
-            projectList.innerHTML += cardHTML;
-        });
-    } else {
-        projectList.innerHTML = '<p style="text-align:center;">No projects found in database.</p>';
-    }
+            </div>
+        `;
+        projectList.innerHTML += cardHTML;
+    });
 });
