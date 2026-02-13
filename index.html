@@ -1,44 +1,17 @@
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamraj Project Store</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div class="app-container">
-        <div class="search-container">
-            <input type="text" placeholder="Search for projects...">
-        </div>
-
-        <div class="banner">
-            <img src="your-banner-image.jpg" alt="Modded By Hamraj">
-        </div>
-
-        <div class="project-card">
-            <div class="project-icon">
-                <img src="icon.png" alt="icon">
-            </div>
-            <div class="project-info">
-                <h3>test</h3>
-                <div class="author">
-                    <span class="avatar">H</span>
-                    <p>Hamraj YT</p>
-                </div>
-            </div>
-        </div>
-
-        <nav class="bottom-nav">
-            <div class="nav-item">Projects</div>
-            <div class="nav-item active">Store</div>
-            <div class="nav-item">Profile</div>
-        </nav>
-
-        <button class="upload-btn">↑ Upload project</button>
+<div class="app-container">
+    <div class="search-container">
+        <input type="text" placeholder="Search for projects...">
     </div>
 
-</body>
-</html>
+    <div id="project-list" class="content-wrapper">
+        </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item">Projects</div>
+        <div class="nav-item active">Store</div>
+        <div class="nav-item">Profile</div>
+    </nav>
+</div>
