@@ -144,3 +144,6 @@ body {
     background: #eee;
 }
 
+#project-list {
+    display: contents;
+}
