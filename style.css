@@ -2,22 +2,25 @@ body {
     background-color: #ffffff;
     margin: 0;
     display: flex;
-    justify-content: center; /* Centers the app-container horizontally */
+    justify-content: center; /* Keeps everything horizontally centered */
     font-family: 'Segoe UI', sans-serif;
 }
 
 .app-container {
     width: 100%;
-    max-width: 480px; /* Forces mobile view on desktop */
+    max-width: 450px; 
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers all children */
-    padding: 20px 15px 100px 15px;
+    align-items: center; /* Centers all child elements */
+    padding: 30px 15px 100px 15px; /* Increased top padding */
 }
 
-/* Search Bar Styling */
-.search-section { width: 100%; margin-bottom: 20px; }
-.search-section input {
+.search-container {
+    width: 100%;
+    margin-bottom: 25px; /* Added more space since banner is removed */
+}
+
+.search-container input {
     width: 100%;
     padding: 14px 20px;
     border-radius: 30px;
@@ -26,22 +29,17 @@ body {
     box-sizing: border-box;
 }
 
-/* Banner Card */
-.banner-card {
+#project-list {
     width: 100%;
-    height: 180px;
-    background: #eeeeee;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
-.banner-card img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Dynamic Project Cards */
-#project-list { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-
+/* Matching the project card style from your database fields */
 .project-card {
-    width: 100%;
+    width: 95%;
     background: #eeeeee;
     border-radius: 20px;
     padding: 15px;
@@ -49,42 +47,4 @@ body {
     align-items: center;
     gap: 15px;
     box-sizing: border-box;
-}
-
-.project-icon img {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    object-fit: cover;
-    background: #ccc;
-}
-
-.project-details h3 { margin: 0 0 5px 0; font-size: 18px; }
-
-.author-info { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #666; }
-.user-avatar { width: 20px; height: 20px; border-radius: 50%; }
-
-/* Navigation */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 480px;
-    background: #fcfcfc;
-    display: flex;
-    justify-content: space-around;
-    padding: 15px 0;
-    border-top: 1px solid #eee;
-}
-
-.fab-upload {
-    position: fixed;
-    bottom: 80px;
-    background: #dee5ff;
-    color: #4f6bff;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 15px;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
