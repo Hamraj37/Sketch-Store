@@ -10,7 +10,7 @@ const firebaseConfig = {
   measurementId: "G-01HG0WPLRK"
 };
 
-// Initialize Firebase (using your config from before)
+// Initialize Firebase with your config
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
@@ -23,14 +23,14 @@ database.ref('projects').on('value', (snapshot) => {
     snapshot.forEach((childSnapshot) => {
         const data = childSnapshot.val();
         
-        // Creating the card using the exact keys from your Firebase screenshot
+        // Match the keys exactly as they appear in your Firebase screenshot
         const cardHTML = `
             <div class="project-card">
                 <div class="project-icon">
                     <img src="${data.logoUrl}" alt="icon" onerror="this.src='https://via.placeholder.com/60'">
                 </div>
                 <div class="project-info">
-                    <h3>${data.projectName}</h3>
+                    <h3 class="project-name">${data.projectName}</h3>
                     <div class="author-row">
                         <img src="${data.profilePicUrl}" class="avatar" onerror="this.style.display='none'">
                         <span>${data.userName}</span>
