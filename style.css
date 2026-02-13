@@ -141,7 +141,6 @@ body {
     height: 120px; /* Specific fixed height */
     border-radius: 12px;
     object-fit: cover; /* Prevents image stretching */
-    margin-bottom: 10px;
     background: #eee;
 }
 
