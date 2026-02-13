@@ -1,17 +1,31 @@
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketch Store</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-database-compat.js"></script>
+</head>
+<body>
 
-<div class="app-container">
-    <div class="search-container">
-        <input type="text" placeholder="Search for projects...">
-    </div>
-
-    <div id="project-list" class="content-wrapper">
+    <div class="app-container">
+        <div class="search-container">
+            <input type="text" placeholder="Search for projects...">
         </div>
 
-    <nav class="bottom-nav">
-        <div class="nav-item">Projects</div>
-        <div class="nav-item active">Store</div>
-        <div class="nav-item">Profile</div>
-    </nav>
-</div>
+        <div id="project-list"></div>
+
+        <nav class="bottom-nav">
+            <div class="nav-item">Projects</div>
+            <div class="nav-item active">Store</div>
+            <div class="nav-item">Profile</div>
+        </nav>
+        
+        <button class="upload-btn">↑ Upload project</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
