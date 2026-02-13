@@ -1,0 +1,101 @@
+body {
+    background-color: #f8f9fd;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 400px; /* Mimics a mobile screen */
+    padding: 20px;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Search Bar */
+.search-container input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 25px;
+    border: none;
+    background: #eeeeee;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Banner Card */
+.banner {
+    background: #eeeeee;
+    border-radius: 15px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+/* Project List Card */
+.project-card {
+    background: #eeeeee;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.project-icon img {
+    width: 50px;
+    border-radius: 10px;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.avatar {
+    background: #0084ff;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+/* Floating Button */
+.upload-btn {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: #dee5ff;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 15px;
+    font-weight: bold;
+    color: #3f51b5;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Bottom Nav */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+}
+
