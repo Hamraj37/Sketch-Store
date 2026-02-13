@@ -1,4 +1,4 @@
-// 1. Your provided Firebase configuration
+// 1. Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyBmYKT5JOfH4NiAzzNWL1u_P3bkbbv6dWo",
   authDomain: "sketchware-pro-fe44e.firebaseapp.com",
@@ -10,27 +10,27 @@ const firebaseConfig = {
   measurementId: "G-01HG0WPLRK"
 };
 
-// 2. Initialize Firebase correctly to fix the ReferenceError
+// 2. Initialize Firebase and DEFINE the database variable
 firebase.initializeApp(firebaseConfig);
-const database = firebase.database(); // This defines the "database" variable
+const database = firebase.database(); 
 
+// 3. Define UI Elements
 const projectList = document.getElementById('project-list');
 const slider = document.getElementById('recent-slider');
 
-// 3. Listen for data in the "projects" node
+// 4. Listen for data
 database.ref('projects').on('value', (snapshot) => {
     projectList.innerHTML = ''; 
     slider.innerHTML = '';
     
     const projects = [];
-    snapshot.forEach((childSnapshot) => {
-        projects.push(childSnapshot.val());
+    snapshot.forEach((child) => {
+        projects.push(child.val());
     });
 
-    // Reverse for recent slider (Top 5)
     const reversed = [...projects].reverse();
 
-    // Populate Slider
+    // Populate Slider (Top 5)
     reversed.slice(0, 5).forEach((data) => {
         slider.innerHTML += `
             <div class="slider-item">
@@ -41,9 +41,9 @@ database.ref('projects').on('value', (snapshot) => {
         `;
     });
 
-    // Populate All Projects List
+    // Populate Main List
     projects.forEach((data) => {
-        const cardHTML = `
+        projectList.innerHTML += `
             <div class="project-card">
                 <div class="project-icon">
                     <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/60'">
@@ -57,6 +57,5 @@ database.ref('projects').on('value', (snapshot) => {
                 </div>
             </div>
         `;
-        projectList.innerHTML += cardHTML;
     });
 });
