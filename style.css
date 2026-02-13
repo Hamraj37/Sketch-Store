@@ -111,7 +111,7 @@ body {
 /* Fixed Image Size inside Slider */
 .slider-item img {
     width: 100%; /* Specific fixed width */
-    height: 120px; /* Specific fixed height */
+    height: 200px; /* Specific fixed height */
     border-radius: 12px;
     object-fit: cover; /* Prevents image stretching */
     background: #eee;
