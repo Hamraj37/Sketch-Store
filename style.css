@@ -1,75 +1,86 @@
-/* Centering the entire app container */
+/* Center the whole app on the screen */
 body {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     margin: 0;
     display: flex;
-    justify-content: center;
-    font-family: sans-serif;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .app-container {
     width: 100%;
-    max-width: 480px; /* Mobile width */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers items horizontally */
-    padding: 15px;
-}
-
-/* Centering Project Cards */
-#project-list {
-    width: 100%;
+    max-width: 450px; /* Limits width to mobile-size */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    padding: 15px;
 }
 
+/* Fix Project Card Layout */
 .project-card {
     width: 90%;
     background: #eeeeee;
     border-radius: 20px;
     padding: 15px;
-    display: flex;
-    align-items: center;
+    margin-bottom: 15px;
+    display: flex; /* Keeps icon and text side-by-side */
+    align-items: center; /* Vertically centers icon with text */
     gap: 15px;
+    text-align: left; /* Ensures text inside card is left-aligned */
 }
 
-/* Image alignment fixes */
+/* Fix Icon and Avatar scaling */
 .project-icon img {
-    width: 65px;
-    height: 65px;
+    width: 60px;
+    height: 60px;
     border-radius: 12px;
     object-fit: cover;
-    background: #ddd; /* Shows grey box if image fails to load */
+    background: #ccc;
 }
 
 .author-row {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 5px;
-    color: #666;
+    color: #555;
     font-size: 14px;
 }
 
 .avatar {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-/* Search Bar Centering */
-.search-container {
-    width: 95%;
-    margin-bottom: 20px;
+.project-name {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-.search-container input {
+/* Center Navigation and Buttons */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    padding: 12px 20px;
-    border-radius: 25px;
+    max-width: 450px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+}
+
+.upload-btn {
+    position: fixed;
+    bottom: 80px;
+    background: #e0e7ff;
+    color: #3b82f6;
     border: none;
-    background: #eeeeee;
+    padding: 12px 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
 }
