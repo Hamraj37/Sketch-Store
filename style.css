@@ -1,21 +1,37 @@
+/* Center the entire application on the page */
 body {
     background-color: #ffffff;
     margin: 0;
     display: flex;
-    justify-content: center; /* Centers app-container horizontally */
+    justify-content: center; /* Centers the app-container */
     font-family: 'Segoe UI', sans-serif;
 }
 
 .app-container {
     width: 100%;
-    max-width: 450px; 
+    max-width: 450px; /* Mimics a mobile screen width */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers search and project list */
-    padding: 30px 15px 100px 15px;
+    align-items: center; /* Centers children like the search bar and cards */
+    padding: 20px 15px 100px 15px; /* Bottom padding for the nav bar */
 }
 
-/* Ensure the list fills the width and stays centered */
+/* Search Bar Alignment */
+.search-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    width: 100%; /* Spans the full width of the centered container */
+    padding: 14px 20px;
+    border-radius: 30px;
+    border: none;
+    background: #f1f1f1;
+    box-sizing: border-box; /* Ensures padding doesn't break centering */
+}
+
+/* Project Card Layout */
 #project-list {
     width: 100%;
     display: flex;
@@ -24,9 +40,8 @@ body {
     gap: 15px;
 }
 
-/* Centered Project Card style */
 .project-card {
-    width: 95%;
+    width: 95%; /* Centered with a small margin */
     background: #eeeeee;
     border-radius: 20px;
     padding: 15px;
