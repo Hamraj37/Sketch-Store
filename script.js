@@ -10,9 +10,6 @@ const firebaseConfig = {
   measurementId: "G-01HG0WPLRK"
 };
 
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-
 database.ref('projects').on('value', (snapshot) => {
     const slider = document.getElementById('recent-slider');
     const projectList = document.getElementById('project-list');
