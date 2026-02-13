@@ -2,7 +2,7 @@ body {
     background-color: #ffffff;
     margin: 0;
     display: flex;
-    justify-content: center; /* Keeps everything horizontally centered */
+    justify-content: center; /* Centers app-container horizontally */
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -11,24 +11,11 @@ body {
     max-width: 450px; 
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers all child elements */
-    padding: 30px 15px 100px 15px; /* Increased top padding */
+    align-items: center; /* Centers search and project list */
+    padding: 30px 15px 100px 15px;
 }
 
-.search-container {
-    width: 100%;
-    margin-bottom: 25px; /* Added more space since banner is removed */
-}
-
-.search-container input {
-    width: 100%;
-    padding: 14px 20px;
-    border-radius: 30px;
-    border: none;
-    background: #f1f1f1;
-    box-sizing: border-box;
-}
-
+/* Ensure the list fills the width and stays centered */
 #project-list {
     width: 100%;
     display: flex;
@@ -37,7 +24,7 @@ body {
     gap: 15px;
 }
 
-/* Matching the project card style from your database fields */
+/* Centered Project Card style */
 .project-card {
     width: 95%;
     background: #eeeeee;
