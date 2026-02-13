@@ -1,33 +1,75 @@
+/* Centering the entire app container */
 body {
-    background-color: #ffffff;
+    background-color: #f8f9fa;
     margin: 0;
     display: flex;
-    justify-content: center; /* Centers the app-container horizontally */
+    justify-content: center;
+    font-family: sans-serif;
 }
 
 .app-container {
     width: 100%;
-    max-width: 450px;
+    max-width: 480px; /* Mobile width */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers children inside the container */
-    padding: 20px;
+    align-items: center; /* Centers items horizontally */
+    padding: 15px;
 }
 
-.content-wrapper {
+/* Centering Project Cards */
+#project-list {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers the dynamically loaded cards */
+    align-items: center;
     gap: 15px;
 }
 
 .project-card {
-    width: 95%; /* Slightly less than 100% for padding effect */
-    background: #f1f1f1;
-    border-radius: 15px;
+    width: 90%;
+    background: #eeeeee;
+    border-radius: 20px;
     padding: 15px;
     display: flex;
     align-items: center;
     gap: 15px;
+}
+
+/* Image alignment fixes */
+.project-icon img {
+    width: 65px;
+    height: 65px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: #ddd; /* Shows grey box if image fails to load */
+}
+
+.author-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+    color: #666;
+    font-size: 14px;
+}
+
+.avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Search Bar Centering */
+.search-container {
+    width: 95%;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: none;
+    background: #eeeeee;
 }
