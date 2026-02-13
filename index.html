@@ -10,36 +10,35 @@
 </head>
 <body>
 <div class="app-container">
-    <div class="search-bar">
-        <i class="menu-icon">☰</i>
-        <input type="text" placeholder="Search for projects...">
-        <i class="search-icon">🔍</i>
+    <div class="search-header">
+        <span class="menu-btn">☰</span>
+        <input type="text" id="projectSearch" placeholder="Search for projects..." name="search">
+        <span class="search-btn">🔍</span>
     </div>
 
-    <div class="content">
-        <div class="banner-card">
-            <img src="https://raw.githubusercontent.com/Hamraj37/Sketch-Store/main/banner.png" alt="Modded By Hamraj">
-        </div>
-
-        <div id="project-list">
-            </div>
+    <div class="section">
+        <div id="recent-slider" class="slider-container"></div>
     </div>
+
+    <div id="project-list" class="main-feed"></div>
 
     <button class="fab">
-        <span>↑ Upload project</span>
+        <span class="fab-icon">↑</span> Upload project
     </button>
 
     <nav class="bottom-nav">
         <div class="nav-item">
-            <div class="icon">list</div>
+            <span class="nav-icon">list</span>
             <span>Projects</span>
         </div>
         <div class="nav-item active">
-            <div class="icon-pill">S</div>
+            <div class="nav-pill">
+                <span class="nav-icon">S</span>
+            </div>
             <span>Store</span>
         </div>
         <div class="nav-item">
-            <div class="icon">person</div>
+            <span class="nav-icon">person</span>
             <span>Profile</span>
         </div>
     </nav>
