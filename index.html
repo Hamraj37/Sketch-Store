@@ -10,37 +10,21 @@
 </head>
 <body>
 <div class="app-container">
-    <div class="search-header">
-        <span class="menu-btn">☰</span>
-        <input type="text" id="projectSearch" placeholder="Search for projects..." name="search">
-        <span class="search-btn">🔍</span>
+    <div class="search-container">
+        <input type="text" id="projectSearch" name="search" placeholder="Search for projects..." autocomplete="off">
     </div>
 
-    <div class="section">
-        <div id="recent-slider" class="slider-container"></div>
-    </div>
+    <h2 class="section-title">Recent Projects</h2>
+    <div id="recent-slider" class="slider-container">
+        </div>
 
-    <div id="project-list" class="main-feed"></div>
-
-    <button class="fab">
-        <span class="fab-icon">↑</span> Upload project
-    </button>
+    <h2 class="section-title">All Projects</h2>
+    <div id="project-list"></div>
 
     <nav class="bottom-nav">
-        <div class="nav-item">
-            <span class="nav-icon">list</span>
-            <span>Projects</span>
-        </div>
-        <div class="nav-item active">
-            <div class="nav-pill">
-                <span class="nav-icon">S</span>
-            </div>
-            <span>Store</span>
-        </div>
-        <div class="nav-item">
-            <span class="nav-icon">person</span>
-            <span>Profile</span>
-        </div>
+        <div class="nav-item">Projects</div>
+        <div class="nav-item active">Store</div>
+        <div class="nav-item">Profile</div>
     </nav>
 </div>
     <script src="script.js"></script>
