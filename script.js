@@ -10,34 +10,38 @@ const firebaseConfig = {
   measurementId: "G-01HG0WPLRK"
 };
 
-// Initialize Firebase with your config
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 const projectList = document.getElementById('project-list');
 
-// Listen for data from the "projects" node
+// Listen for data in the "projects" node
 database.ref('projects').on('value', (snapshot) => {
     projectList.innerHTML = ''; 
     
-    snapshot.forEach((childSnapshot) => {
-        const data = childSnapshot.val();
-        
-        // Match the keys exactly as they appear in your Firebase screenshot
-        const cardHTML = `
-            <div class="project-card">
-                <div class="project-icon">
-                    <img src="${data.logoUrl}" alt="icon" onerror="this.src='https://via.placeholder.com/60'">
-                </div>
-                <div class="project-info">
-                    <h3 class="project-name">${data.projectName}</h3>
-                    <div class="author-row">
-                        <img src="${data.profilePicUrl}" class="avatar" onerror="this.style.display='none'">
-                        <span>${data.userName}</span>
+    if (snapshot.exists()) {
+        snapshot.forEach((childSnapshot) => {
+            const data = childSnapshot.val();
+            
+            // Generate card using the EXACT keys from your Firebase screenshot
+            const cardHTML = `
+                <div class="project-card">
+                    <div class="project-icon">
+                        <img src="${data.logoUrl}" alt="logo" onerror="this.src='https://via.placeholder.com/60'">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-name">${data.projectName}</h3>
+                        <div class="author-row">
+                            <img src="${data.profilePicUrl}" class="avatar" onerror="this.style.display='none'">
+                            <span>${data.userName}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
-        projectList.innerHTML += cardHTML;
-    });
+            `;
+            projectList.innerHTML += cardHTML;
+        });
+    } else {
+        projectList.innerHTML = '<p style="text-align:center;">No projects found in database.</p>';
+    }
 });
