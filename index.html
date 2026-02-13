@@ -9,24 +9,24 @@
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-database-compat.js"></script>
 </head>
 <body>
-    <div class="app-container">
-        <div class="search-container">
-            <input type="text" id="projectSearch" name="search" placeholder="Search for projects...">
-        </div>
-
-        <div class="banner">
-            <img src="https://raw.githubusercontent.com/Hamraj37/Sketch-Store/main/banner.png" alt="Banner" onerror="this.src='https://via.placeholder.com/400x180?text=Sketch+Store'">
-        </div>
-
-        <div id="project-list"></div>
-
-        <nav class="bottom-nav">
-            <div class="nav-item">Projects</div>
-            <div class="nav-item active">Store</div>
-            <div class="nav-item">Profile</div>
-        </nav>
-        <button class="upload-btn">↑ Upload project</button>
+   <div class="app-container">
+    <div class="search-container">
+        <input type="text" id="projectSearch" name="search" placeholder="Search for projects..." autocomplete="off">
     </div>
+
+    <h2 class="section-title">Recent Projects</h2>
+    <div id="recent-slider" class="slider-container">
+        </div>
+
+    <h2 class="section-title">All Projects</h2>
+    <div id="project-list"></div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item">Projects</div>
+        <div class="nav-item active">Store</div>
+        <div class="nav-item">Profile</div>
+    </nav>
+</div>
     <script src="script.js"></script>
 </body>
 </html>
