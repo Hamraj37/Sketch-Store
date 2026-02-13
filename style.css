@@ -112,7 +112,6 @@ body {
 /* Container for the slider */
 .slider-container {
     width: 100%;
-    display: flex;
     overflow-x: auto; /* Enables horizontal scrolling */
     scroll-snap-type: x mandatory; /* Makes it snap to the center */
     gap: 12px;
