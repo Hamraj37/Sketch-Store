@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
             slider.innerHTML += `
                 <div class="slider-item">
                     <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/100'">
-                    <h3>${data.projectName}</h3>
                 </div>`;
         });
 
