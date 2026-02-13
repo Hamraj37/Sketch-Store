@@ -1,30 +1,47 @@
+/* Center the entire application on the page */
 body {
     background-color: #ffffff;
     margin: 0;
     display: flex;
-    justify-content: center; /* Centers the whole app container */
+    justify-content: center; /* Centers the app-container */
     font-family: 'Segoe UI', sans-serif;
 }
 
 .app-container {
     width: 100%;
-    max-width: 450px; /* Forces a mobile-size column */
+    max-width: 450px; /* Mimics a mobile screen width */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers all child elements */
-    padding: 15px;
+    align-items: center; /* Centers children like the search bar and cards */
+    padding: 20px 15px 100px 15px; /* Bottom padding for the nav bar */
 }
 
+/* Search Bar Alignment */
+.search-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    width: 100%; /* Spans the full width of the centered container */
+    padding: 14px 20px;
+    border-radius: 30px;
+    border: none;
+    background: #f1f1f1;
+    box-sizing: border-box; /* Ensures padding doesn't break centering */
+}
+
+/* Project Card Layout */
 #project-list {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers project cards */
+    align-items: center;
     gap: 15px;
 }
 
 .project-card {
-    width: 95%; /* Slightly smaller than container for padding */
+    width: 95%; /* Centered with a small margin */
     background: #eeeeee;
     border-radius: 20px;
     padding: 15px;
@@ -32,25 +49,4 @@ body {
     align-items: center;
     gap: 15px;
     box-sizing: border-box;
-}
-
-.project-icon img {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    object-fit: cover;
-    background: #ccc;
-}
-
-.author {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 5px;
-}
-
-.avatar-img {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
 }
