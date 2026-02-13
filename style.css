@@ -108,3 +108,53 @@ body {
     margin-bottom: 4px;
     font-weight: bold;
 }
+
+/* Container for the slider */
+.slider-container {
+    width: 100%;
+    display: flex;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    scroll-snap-type: x mandatory; /* Makes it snap to the center */
+    gap: 12px;
+    padding: 10px 0 20px 0;
+    scrollbar-width: none; /* Hides scrollbar on Firefox */
+    -ms-overflow-style: none; /* Hides scrollbar on IE/Edge */
+}
+
+.slider-container::-webkit-scrollbar {
+    display: none; /* Hides scrollbar on Chrome/Safari */
+}
+
+/* Fixed Slider Item Size */
+.slider-item {
+    flex: 0 0 75%; /* Each slide takes exactly 75% of the width */
+    background: #ffffff; /* White card on light background */
+    border-radius: 15px;
+    padding: 15px;
+    scroll-snap-align: center; /* Keeps active slide centered */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Soft shadow */
+}
+
+/* Fixed Image Size inside Slider */
+.slider-item img {
+    width: 120px; /* Specific fixed width */
+    height: 120px; /* Specific fixed height */
+    border-radius: 12px;
+    object-fit: cover; /* Prevents image stretching */
+    margin-bottom: 10px;
+    background: #eee;
+}
+
+.slider-item h3 {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Keeps text on one line */
+    width: 100%;
+}
