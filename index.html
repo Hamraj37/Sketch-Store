@@ -1,36 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sketch Store</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-database-compat.js"></script>
-</head>
-<body>
-
-    <div class="app-container">
-        <div class="search-section">
-            <input type="text" id="searchInput" placeholder="Search for projects...">
-        </div>
-
-        <div class="banner-card">
-            <img src="https://raw.githubusercontent.com/Hamraj37/Sketch-Store/main/banner.png" alt="Banner" onerror="this.src='https://via.placeholder.com/400x200?text=Modded+By+Hamraj'">
-        </div>
-
-        <div id="project-list">
-            </div>
-
-        <nav class="bottom-nav">
-            <div class="nav-btn">Projects</div>
-            <div class="nav-btn active">Store</div>
-            <div class="nav-btn">Profile</div>
-        </nav>
-
-        <button class="fab-upload">↑ Upload project</button>
+<div class="app-container">
+    <div class="search-container">
+        <input type="text" id="projectSearch" placeholder="Search for projects...">
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <div class="banner">
+        <img src="https://raw.githubusercontent.com/Hamraj37/Sketch-Store/main/banner.png" alt="Modded By Hamraj" onerror="this.src='https://via.placeholder.com/400x200?text=Sketch+Store'">
+    </div>
+
+    <div id="project-list"></div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item">Projects</div>
+        <div class="nav-item active">Store</div>
+        <div class="nav-item">Profile</div>
+    </nav>
+
+    <button class="upload-btn">↑ Upload project</button>
+</div>
