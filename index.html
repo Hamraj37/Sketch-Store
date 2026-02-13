@@ -9,22 +9,30 @@
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-database-compat.js"></script>
 </head>
 <body>
-   <div class="app-container">
-    <div class="search-container">
-        <input type="text" id="projectSearch" name="search" placeholder="Search for projects..." autocomplete="off">
+  <div class="app-container">
+    <div class="search-header">
+        <span>☰</span>
+        <input type="text" placeholder="Search for projects...">
+        <span>🔍</span>
     </div>
 
-    <h2 class="section-title">Recent Projects</h2>
-    <div id="recent-slider" class="slider-container">
-        </div>
-
-    <h2 class="section-title">All Projects</h2>
     <div id="project-list"></div>
 
+    <button class="fab">↑ Upload project</button>
+
     <nav class="bottom-nav">
-        <div class="nav-item">Projects</div>
-        <div class="nav-item active">Store</div>
-        <div class="nav-item">Profile</div>
+        <div class="nav-item">
+            <span>list</span>
+            <span>Projects</span>
+        </div>
+        <div class="nav-item active">
+            <div class="nav-pill">S</div>
+            <span>Store</span>
+        </div>
+        <div class="nav-item">
+            <span>person</span>
+            <span>Profile</span>
+        </div>
     </nav>
 </div>
     <script src="script.js"></script>
