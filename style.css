@@ -24,18 +24,47 @@ body {
     gap: 15px;
 }
 
-/* Centered Project Card style */
+/* Container for the vertical list cards */
 .project-card {
     width: 95%;
     background: #eeeeee;
     border-radius: 20px;
-    padding: 15px;
+    padding: 12px; /* Slightly tighter padding for better spacing */
     display: flex;
-    align-items: center;
+    align-items: center; /* Vertically centers icon with text */
     gap: 15px;
     box-sizing: border-box;
+    margin-bottom: 5px;
 }
 
+/* Fixed Icon Size for the list */
+.project-icon {
+    width: 60px;  /* Forces a fixed width */
+    height: 60px; /* Forces a fixed height */
+    flex-shrink: 0; /* Prevents the icon from squishing if text is long */
+}
+
+.project-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover; /* Crops the image to fit the square perfectly */
+    background: #ccc; /* Placeholder color while loading */
+}
+
+/* Ensure project info text doesn't overflow */
+.project-info {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.project-info h3 {
+    margin: 0;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds '...' if project name is too long */
+}
 .section-title {
     width: 95%;
     font-size: 18px;
