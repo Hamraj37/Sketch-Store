@@ -29,6 +29,7 @@ body {
     gap: 12px;
     box-sizing: border-box;
     margin-bottom: 15px;
+    position: fixed;
 }
 
 .search-header input {
@@ -89,6 +90,7 @@ body {
     padding: 10px 0 20px 0;
     scrollbar-width: none; /* Hides scrollbar on Firefox */
     -ms-overflow-style: none; /* Hides scrollbar on IE/Edge */
+    margin-top: 50px;
 }
 
 
