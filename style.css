@@ -137,7 +137,7 @@ body {
 
 /* Fixed Image Size inside Slider */
 .slider-item img {
-    width: 120px; /* Specific fixed width */
+    width: 100%; /* Specific fixed width */
     height: 120px; /* Specific fixed height */
     border-radius: 12px;
     object-fit: cover; /* Prevents image stretching */
@@ -145,12 +145,3 @@ body {
     background: #eee;
 }
 
-.slider-item h3 {
-    margin: 5px 0;
-    font-size: 16px;
-    color: #333;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* Keeps text on one line */
-    width: 100%;
-}
