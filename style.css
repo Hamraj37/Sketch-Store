@@ -127,7 +127,6 @@ body {
 
 /* Fixed Slider Item Size */
 .slider-item {
-    flex: 0 0 75%; /* Each slide takes exactly 75% of the width */
     background: #ffffff; /* White card on light background */
     border-radius: 15px;
     padding: 15px;
