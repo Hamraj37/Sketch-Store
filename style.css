@@ -1,135 +1,37 @@
-/* Layout Centering */
 body {
-    background-color: #f8f9fd;
+    background-color: #ffffff;
     margin: 0;
     display: flex;
-    justify-content: center;
-    font-family: 'Segoe UI', Roboto, sans-serif;
+    justify-content: center; /* Centers app-container horizontally */
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .app-container {
     width: 100%;
-    max-width: 450px; /* Mobile width constraint */
-    min-height: 100vh;
-    position: relative;
-    padding-bottom: 100px; /* Space for bottom nav */
-}
-
-/* Header Styling */
-.search-header {
-    background: #f1f3f4;
-    margin: 15px;
-    padding: 10px 20px;
-    border-radius: 30px;
+    max-width: 450px; 
     display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers search and project list */
+    padding: 30px 15px 100px 15px;
+}
+
+/* Ensure the list fills the width and stays centered */
+#project-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
 }
 
-.search-header input {
-    border: none;
-    background: transparent;
-    flex: 1;
-    font-size: 16px;
-    outline: none;
-}
-
-/* Container for the vertical list cards */
+/* Centered Project Card style */
 .project-card {
     width: 95%;
     background: #eeeeee;
     border-radius: 20px;
-    padding: 12px; /* Slightly tighter padding for better spacing */
+    padding: 15px;
     display: flex;
-    align-items: center; /* Vertically centers icon with text */
+    align-items: center;
     gap: 15px;
     box-sizing: border-box;
-    margin-bottom: 5px;
-}
-
-/* Fixed Icon Size for the list */
-.project-icon {
-    width: 60px;  /* Forces a fixed width */
-    height: 60px; /* Forces a fixed height */
-    flex-shrink: 0; /* Prevents the icon from squishing if text is long */
-}
-
-.project-icon img {
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    object-fit: cover; /* Crops the image to fit the square perfectly */
-    background: #ccc; /* Placeholder color while loading */
-}
-
-/* Ensure project info text doesn't overflow */
-.project-info {
-    flex-grow: 1;
-    overflow: hidden;
-}
-
-.project-info h3 {
-    margin: 0;
-    font-size: 16px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* Adds '...' if project name is too long */
-}
-
-/* Floating Action Button */
-.fab {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    background: #dee5ff;
-    color: #3f51b5;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    z-index: 100;
-}
-
-/* Project Card */
-.project-card {
-    background: #ffffff;
-    margin: 0 15px 15px 15px;
-    padding: 15px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-/* Bottom Nav */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 450px;
-    background: #fcfcfc;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0 25px 0;
-    border-top: 1px solid #eee;
-}
-
-.nav-item {
-    text-align: center;
-    color: #555;
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nav-pill {
-    background: #dee5ff;
-    padding: 4px 18px;
-    border-radius: 20px;
-    margin-bottom: 4px;
-    color: #3f51b5;
-    font-weight: bold;
 }
