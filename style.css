@@ -147,3 +147,7 @@ body {
 .project-list {
     display: contents;
 }
+
+element.style {
+    display: contents;
+}
