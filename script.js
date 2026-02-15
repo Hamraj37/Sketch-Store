@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         projectList.innerHTML = items.map(data => `
                 <div class="project-card" data-id="${data.id}">
                     <div class="project-icon">
-                        <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/60'">
+                        <img src="${data.logoUrl}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4211/4211763.png'">
                     </div>
                     <div class="project-info">
                         <h3>${data.projectName || 'Untitled'}</h3>
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         database.ref('projects/' + projectId).once('value').then((snapshot) => {
             const project = snapshot.val();
             if (project) {
-                document.getElementById('detail-img').src = project.logoUrl || 'https://via.placeholder.com/100';
+                document.getElementById('detail-img').src = project.logoUrl || 'https://cdn-icons-png.flaticon.com/512/4211/4211763.png';
                 document.getElementById('detail-title').innerText = project.projectName || 'Untitled';
                 document.getElementById('detail-user').innerText = project.userName || 'Unknown User';
                 document.getElementById('publisher-pic').src = project.profilePicUrl || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Populate Slider (Top 5 Recent)
         slider.innerHTML = reversed.slice(0, 5).map(data => `
                 <div class="slider-item" data-id="${data.id}">
-                    <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/100'">
+                    <img src="${data.logoUrl}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4211/4211763.png'">
                 </div>`).join('');
 
         // Populate Main List
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Show profile and logout
             if (profileSection) profileSection.style.display = 'flex';
-            if (logoutBtn) logoutBtn.style.display = 'block';
+            if (logoutBtn) logoutBtn.style.display = 'flex';
             if (uploadBtn) uploadBtn.style.display = 'block';
 
             // Update Profile in Menu
