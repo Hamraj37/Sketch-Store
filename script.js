@@ -137,7 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 commentsList.innerHTML = '';
                 if (snapshot.exists()) {
                     const comments = [];
-                    snapshot.forEach(child => comments.push(child.val()));
+                    snapshot.forEach(child => {
+                        comments.push(child.val());
+                    });
                     commentsList.innerHTML = comments.map(c => `
                         <div class="comment-item">
                             <img src="${c.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" class="comment-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
