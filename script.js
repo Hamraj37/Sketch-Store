@@ -142,9 +142,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (user) {
             // User is signed in, hide modal
             if (loginModal) loginModal.style.display = 'none';
+            
+            // Update Profile in Menu
+            const profilePic = document.getElementById('user-profile-pic');
+            const userName = document.getElementById('user-name');
+            if (profilePic) profilePic.src = user.photoURL || 'https://via.placeholder.com/80';
+            if (userName) userName.innerText = user.displayName || 'User';
         } else {
             // No user is signed in, show modal
             if (loginModal) loginModal.style.display = 'flex';
+            
+            const profilePic = document.getElementById('user-profile-pic');
+            const userName = document.getElementById('user-name');
+            if (profilePic) profilePic.src = 'https://via.placeholder.com/80';
+            if (userName) userName.innerText = 'Guest';
         }
     });
 
