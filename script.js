@@ -125,6 +125,60 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+
+        // Comments Logic
+        const commentsList = document.getElementById('comments-list');
+        const commentInput = document.getElementById('comment-input');
+        const sendCommentBtn = document.getElementById('send-comment-btn');
+
+        if (commentsList) {
+            // Load Comments
+            database.ref(`projects/${projectId}/comments`).on('value', (snapshot) => {
+                commentsList.innerHTML = '';
+                if (snapshot.exists()) {
+                    const comments = [];
+                    snapshot.forEach(child => comments.push(child.val()));
+                    commentsList.innerHTML = comments.map(c => `
+                        <div class="comment-item">
+                            <img src="${c.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" class="comment-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
+                            <div class="comment-body">
+                                <span class="comment-user">${c.userName || 'User'}</span>
+                                <p class="comment-text">${c.text}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                    // Scroll to bottom
+                    commentsList.scrollTop = commentsList.scrollHeight;
+                } else {
+                    commentsList.innerHTML = '<p style="color:#888; text-align:center; font-size: 14px;">No comments yet. Be the first!</p>';
+                }
+            });
+
+            // Send Comment
+            if (sendCommentBtn && commentInput) {
+                sendCommentBtn.addEventListener('click', () => {
+                    const text = commentInput.value.trim();
+                    const user = auth.currentUser;
+                    
+                    if (!user) {
+                        alert("Please go to the Home page and login to comment.");
+                        return;
+                    }
+                    
+                    if (text) {
+                        const newComment = {
+                            text: text,
+                            userId: user.uid,
+                            userName: user.displayName || 'User',
+                            photoURL: user.photoURL,
+                            timestamp: firebase.database.ServerValue.TIMESTAMP
+                        };
+                        database.ref(`projects/${projectId}/comments`).push(newComment);
+                        commentInput.value = '';
+                    }
+                });
+            }
+        }
     }
 
     database.ref('projects').on('value', (snapshot) => {
