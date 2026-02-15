@@ -5,6 +5,7 @@ body {
     display: flex;
     justify-content: center; 
     font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
 }
 
 .app-container {
@@ -16,6 +17,7 @@ body {
     padding: 10px 15px 120px 15px; /* Bottom padding for FAB and Nav */
     min-height: 100vh;
     position: relative;
+    box-sizing: border-box;
 }
 
 /* Header Search Fix */
