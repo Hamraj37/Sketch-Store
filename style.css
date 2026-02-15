@@ -238,8 +238,9 @@ body {
     font-size: 18px;
     color: #333;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 15px;
 }
 
 /* Toggle Switch Styles */
@@ -278,6 +279,7 @@ body {
     background-color: white;
     transition: .4s;
     border-radius: 50%;
+    z-index: 2;
 }
 
 input:checked + .slider {
@@ -286,6 +288,25 @@ input:checked + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px);
+}
+
+.slider .material-icons {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    z-index: 1;
+    transition: 0.4s;
+}
+
+.slider .icon-sun {
+    left: 6px;
+    color: white;
+}
+
+.slider .icon-moon {
+    right: 6px;
+    color: #555;
 }
 
 .menu-overlay {
