@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper function to render the project list
     function renderList(items) {
         projectList.innerHTML = items.map(data => `
-                <div class="project-card">
+                <div class="project-card" data-id="${data.id}">
                     <div class="project-icon">
                         <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/60'">
                     </div>
@@ -58,6 +58,39 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
     if (menuOverlay) menuOverlay.addEventListener('click', toggleMenu);
 
+    // Detail View Logic
+    const detailView = document.getElementById('detail-view');
+    const backBtn = document.getElementById('detail-back');
+
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            detailView.classList.remove('active');
+        });
+    }
+
+    // Handle clicks on projects (Event Delegation)
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.project-card, .slider-item');
+        if (card && card.dataset.id) {
+            const project = allProjects.find(p => p.id === card.dataset.id);
+            if (project) {
+                document.getElementById('detail-img').src = project.logoUrl || 'https://via.placeholder.com/100';
+                document.getElementById('detail-title').innerText = project.projectName || 'Untitled';
+                document.getElementById('detail-user').innerText = project.userName || 'Unknown User';
+                document.getElementById('detail-desc').innerText = project.projectDescription || 'No description provided.';
+                
+                const downloadBtn = document.getElementById('detail-download-btn');
+                if (downloadBtn) {
+                    downloadBtn.onclick = () => {
+                        if (project.swbUrl) window.open(project.swbUrl, '_blank');
+                        else alert('Download link not available');
+                    };
+                }
+                detailView.classList.add('active');
+            }
+        }
+    });
+
     database.ref('projects').on('value', (snapshot) => {
         // Safety check: only run if elements exist
         if (!projectList || !slider) return;
@@ -65,13 +98,17 @@ document.addEventListener('DOMContentLoaded', () => {
         slider.innerHTML = '';
         
         allProjects = [];
-        snapshot.forEach((child) => { allProjects.push(child.val()); });
+        snapshot.forEach((child) => { 
+            const project = child.val();
+            project.id = child.key; // Store the ID
+            allProjects.push(project); 
+        });
 
         const reversed = [...allProjects].reverse();
 
         // Populate Slider (Top 5 Recent)
         slider.innerHTML = reversed.slice(0, 5).map(data => `
-                <div class="slider-item">
+                <div class="slider-item" data-id="${data.id}">
                     <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/100'">
                 </div>`).join('');
 
