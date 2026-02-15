@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         firebase.initializeApp(firebaseConfig);
     }
     const database = firebase.database();
+    const auth = firebase.auth();
 
     const projectList = document.getElementById('project-list');
     const slider = document.getElementById('recent-slider');
@@ -130,4 +131,33 @@ document.addEventListener('DOMContentLoaded', () => {
         // Populate Main List
         renderList(allProjects);
     });
+
+    // Login Logic
+    const loginModal = document.getElementById('login-modal');
+    const loginBtn = document.getElementById('google-login-btn');
+    const closeLoginBtn = document.getElementById('close-login-btn');
+
+    // Check Auth State
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            // User is signed in, hide modal
+            if (loginModal) loginModal.style.display = 'none';
+        } else {
+            // No user is signed in, show modal
+            if (loginModal) loginModal.style.display = 'flex';
+        }
+    });
+
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).catch((error) => alert(error.message));
+        });
+    }
+
+    if (closeLoginBtn) {
+        closeLoginBtn.addEventListener('click', () => {
+            if (loginModal) loginModal.style.display = 'none';
+        });
+    }
 });
