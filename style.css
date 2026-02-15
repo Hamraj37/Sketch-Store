@@ -63,7 +63,7 @@ body {
     align-items: center;
     gap: 15px;
     box-sizing: border-box;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.03);
 }
 
@@ -132,8 +132,64 @@ body {
     background: #eee;
 }
 
-.project-listbg {
-    display: contents;
+/* List Header with View Toggle */
+.list-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5px 10px 5px;
+    box-sizing: border-box;
+}
+
+.list-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+#view-toggle-btn {
+    cursor: pointer;
+    font-size: 22px;
+    user-select: none;
+    color: #555;
+    padding: 5px;
+}
+
+/* Project List Layout (Default) */
+#project-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Grid View Layout */
+#project-list.grid-view {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+#project-list.grid-view .project-card {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 15px 10px;
+    height: 100%;
+}
+
+#project-list.grid-view .project-info {
+    width: 100%;
+    overflow: hidden;
+}
+
+#project-list.grid-view .project-info h3,
+#project-list.grid-view .project-info p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 /* Side Menu Styles */

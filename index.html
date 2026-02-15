@@ -8,11 +8,12 @@
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth-compat.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <!-- Side Menu Structure -->
     <div id="side-menu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn">&times;</a>
+        <a href="javascript:void(0)" class="close-btn"><span class="material-icons">close</span></a>
         <div class="user-profile-section">
             <img id="user-profile-pic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
             <p id="user-name">Guest</p>
@@ -37,17 +38,21 @@
 
  <div class="app-container">
     <div class="search-header">
-        <span class="menu-btn">☰</span>
+        <span class="menu-btn"><span class="material-icons">menu</span></span>
         <input type="text" id="projectSearch" name="projectSearch" placeholder="Search for projects..." autocomplete="off">
-        <span class="search-icon">🔍</span>
+        <span class="material-icons" style="color: #9aa0a6;">search</span>
     </div>
 
     <div id="recent-slider" class="slider-container"></div>
-    <div id="project-list" style="
-    display: contents;
-"></div>
+    
+    <div class="list-header">
+        <h3>All Projects</h3>
+        <span id="view-toggle-btn" class="material-icons">grid_view</span>
+    </div>
 
-    <button class="fab">Download Sketchware</button>
+    <div id="project-list"></div>
+
+    <button class="fab"><span class="material-icons">download</span>&nbsp;Download Sketchware</button>
 
   
 </div>

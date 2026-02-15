@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('recent-slider');
     const searchInput = document.getElementById('projectSearch');
     const logoutBtn = document.getElementById('logout-btn');
+    const viewToggleBtn = document.getElementById('view-toggle-btn');
     let allProjects = [];
 
     // Helper function to render the project list
@@ -45,6 +46,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // View Toggle Logic
+    if (viewToggleBtn) {
+        // Load saved preference
+        if (localStorage.getItem('viewMode') === 'grid') {
+            projectList.classList.add('grid-view');
+            viewToggleBtn.textContent = 'view_list';
+        }
+
+        viewToggleBtn.addEventListener('click', () => {
+            projectList.classList.toggle('grid-view');
+            // Toggle Icon between Grid (⊞) and List (≣)
+            const isGrid = projectList.classList.contains('grid-view');
+            viewToggleBtn.textContent = isGrid ? 'view_list' : 'grid_view';
+            localStorage.setItem('viewMode', isGrid ? 'grid' : 'list');
+        });
+    }
+
     // Menu Logic
     const menuBtn = document.querySelector('.menu-btn');
     const sideMenu = document.getElementById('side-menu');
@@ -175,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Reset Header to Hamburger
             if (menuBtn) {
-                menuBtn.innerHTML = '☰';
+                menuBtn.innerHTML = '<span class="material-icons">menu</span>';
             }
         }
     });
