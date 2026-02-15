@@ -115,50 +115,54 @@
     <script src="config.js"></script>
     <script src="script.js"></script>
     <script>
-        const addFab = document.getElementById('add-fab');
-        const menuUploadBtn = document.getElementById('menu-upload-btn');
-        const uploadSheet = document.getElementById('upload-sheet');
-        const sheetOverlay = document.getElementById('sheet-overlay');
-        const sideMenu = document.getElementById('side-menu');
-        const menuOverlay = document.getElementById('menu-overlay');
+        document.addEventListener('DOMContentLoaded', () => {
+            const addFab = document.getElementById('add-fab');
+            const menuUploadBtn = document.getElementById('menu-upload-btn');
+            const uploadSheet = document.getElementById('upload-sheet');
+            const sheetOverlay = document.getElementById('sheet-overlay');
+            const sideMenu = document.getElementById('side-menu');
+            const menuOverlay = document.getElementById('menu-overlay');
 
-        // Show FAB if logged in
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                addFab.style.display = 'flex';
-                if (menuUploadBtn) menuUploadBtn.style.display = 'block';
-            } else {
-                addFab.style.display = 'none';
-                if (menuUploadBtn) menuUploadBtn.style.display = 'none';
-            }
-        });
-
-        // Open Bottom Sheet
-        const openSheet = () => {
-            uploadSheet.style.display = 'block';
-            sheetOverlay.style.display = 'block';
-            setTimeout(() => uploadSheet.classList.add('open'), 10);
-        };
-
-        addFab.addEventListener('click', openSheet);
-
-        if (menuUploadBtn) {
-            menuUploadBtn.addEventListener('click', () => {
-                // Close Side Menu
-                if (sideMenu) sideMenu.classList.remove('open');
-                if (menuOverlay) menuOverlay.classList.remove('open');
-                // Open Sheet
-                openSheet();
+            // Show FAB if logged in
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    if (addFab) addFab.style.display = 'flex';
+                    if (menuUploadBtn) menuUploadBtn.style.display = 'block';
+                } else {
+                    if (addFab) addFab.style.display = 'none';
+                    if (menuUploadBtn) menuUploadBtn.style.display = 'none';
+                }
             });
-        }
 
-        // Close Bottom Sheet
-        sheetOverlay.addEventListener('click', () => {
-            uploadSheet.classList.remove('open');
-            setTimeout(() => {
-                uploadSheet.style.display = 'none';
-                sheetOverlay.style.display = 'none';
-            }, 300);
+            // Open Bottom Sheet
+            const openSheet = () => {
+                if (uploadSheet) uploadSheet.style.display = 'block';
+                if (sheetOverlay) sheetOverlay.style.display = 'block';
+                if (uploadSheet) setTimeout(() => uploadSheet.classList.add('open'), 10);
+            };
+
+            if (addFab) addFab.addEventListener('click', openSheet);
+
+            if (menuUploadBtn) {
+                menuUploadBtn.addEventListener('click', () => {
+                    // Close Side Menu
+                    if (sideMenu) sideMenu.classList.remove('open');
+                    if (menuOverlay) menuOverlay.classList.remove('open');
+                    // Open Sheet
+                    openSheet();
+                });
+            }
+
+            // Close Bottom Sheet
+            if (sheetOverlay) {
+                sheetOverlay.addEventListener('click', () => {
+                    if (uploadSheet) uploadSheet.classList.remove('open');
+                    setTimeout(() => {
+                        if (uploadSheet) uploadSheet.style.display = 'none';
+                        if (sheetOverlay) sheetOverlay.style.display = 'none';
+                    }, 300);
+                });
+            }
         });
     </script>
 </body>
