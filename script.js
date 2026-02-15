@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('detail-img').src = project.logoUrl || 'https://via.placeholder.com/100';
                 document.getElementById('detail-title').innerText = project.projectName || 'Untitled';
                 document.getElementById('detail-user').innerText = project.userName || 'Unknown User';
+                document.getElementById('publisher-pic').src = project.profilePicUrl || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
                 document.getElementById('detail-desc').innerText = project.projectDescription || 'No description provided.';
 
                 const screenshotsContainer = document.getElementById('detail-screenshots');
