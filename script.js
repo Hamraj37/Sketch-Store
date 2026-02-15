@@ -80,21 +80,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuOverlay) menuOverlay.addEventListener('click', toggleMenu);
 
     // Theme Toggle Logic
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeCheckbox = document.getElementById('theme-toggle-checkbox');
     
     // Check Local Storage for Theme
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
-        if (themeToggleBtn) themeToggleBtn.textContent = 'Light Mode';
+        if (themeCheckbox) themeCheckbox.checked = true;
     }
 
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
+    if (themeCheckbox) {
+        themeCheckbox.addEventListener('change', (e) => {
+            const isDark = e.target.checked;
+            document.body.classList.toggle('dark-mode', isDark);
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            themeToggleBtn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-            toggleMenu();
         });
     }
 
