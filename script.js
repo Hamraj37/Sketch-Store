@@ -14,6 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const projectList = document.getElementById('project-list');
     const slider = document.getElementById('recent-slider');
+    
+    // Menu Logic
+    const menuBtn = document.querySelector('.menu-btn');
+    const sideMenu = document.getElementById('side-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const closeBtn = document.querySelector('.close-btn');
+
+    function toggleMenu() {
+        sideMenu.classList.toggle('open');
+        menuOverlay.classList.toggle('open');
+    }
+
+    if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+    if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
+    if (menuOverlay) menuOverlay.addEventListener('click', toggleMenu);
 
     database.ref('projects').on('value', (snapshot) => {
         // Safety check: only run if elements exist
