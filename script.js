@@ -79,6 +79,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
     if (menuOverlay) menuOverlay.addEventListener('click', toggleMenu);
 
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    
+    // Check Local Storage for Theme
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        if (themeToggleBtn) themeToggleBtn.textContent = 'Light Mode';
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggleBtn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+            toggleMenu();
+        });
+    }
+
     // Back Button Logic (for details page)
     const backBtn = document.getElementById('detail-back');
     if (backBtn) {

@@ -469,3 +469,55 @@ body {
     background: #4285F4; color: white; border: none; padding: 12px 20px;
     border-radius: 8px; cursor: pointer; font-size: 16px; margin-top: 15px; width: 100%;
 }
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .app-container,
+body.dark-mode .detail-view,
+body.dark-mode .publisher-section {
+    background-color: #121212;
+}
+
+body.dark-mode .project-card,
+body.dark-mode .slider-item,
+body.dark-mode .side-menu,
+body.dark-mode .detail-content,
+body.dark-mode .comments-section,
+body.dark-mode .login-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .search-header,
+body.dark-mode .detail-header,
+body.dark-mode .comment-body {
+    background-color: #333333;
+}
+
+body.dark-mode h3,
+body.dark-mode p,
+body.dark-mode a,
+body.dark-mode #detail-user,
+body.dark-mode .section-title,
+body.dark-mode .comment-text,
+body.dark-mode .comment-user,
+body.dark-mode #view-toggle-btn {
+    color: #e0e0e0;
+}
+
+body.dark-mode .side-menu a:hover {
+    background-color: #333333;
+}
+
+body.dark-mode input {
+    color: #e0e0e0;
+}
+
+body.dark-mode .fab {
+    background-color: #333;
+    color: #bb86fc;
+}
