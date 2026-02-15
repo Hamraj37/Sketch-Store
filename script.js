@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const database = firebase.database();
     const auth = firebase.auth();
+    const storage = firebase.storage();
 
     const projectList = document.getElementById('project-list');
     const slider = document.getElementById('recent-slider');
@@ -331,6 +332,89 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             toggleMenu(); // Close menu immediately
             auth.signOut().catch((error) => console.error("Logout error:", error));
+        });
+    }
+
+    // Upload Form Logic
+    const uploadForm = document.getElementById('upload-form');
+    if (uploadForm) {
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const user = auth.currentUser;
+            if (!user) {
+                alert("You must be logged in to upload.");
+                return;
+            }
+
+            const name = document.getElementById('u-name').value;
+            const desc = document.getElementById('u-desc').value;
+            const iconFile = document.getElementById('u-icon').files[0];
+            const swbFile = document.getElementById('u-file').files[0];
+            const screenFiles = document.getElementById('u-screens').files;
+            const status = document.getElementById('upload-status');
+            const submitBtn = document.getElementById('upload-submit-btn');
+
+            if (!iconFile || !swbFile) {
+                alert("Please select both an icon and a project file.");
+                return;
+            }
+
+            try {
+                submitBtn.disabled = true;
+                status.innerText = "Uploading Icon...";
+
+                // 1. Upload Icon
+                const iconRef = storage.ref(`icons/${Date.now()}_${iconFile.name}`);
+                await iconRef.put(iconFile);
+                const iconUrl = await iconRef.getDownloadURL();
+
+                status.innerText = "Uploading Project File...";
+
+                // 2. Upload SWB
+                const swbRef = storage.ref(`projects/${Date.now()}_${swbFile.name}`);
+                await swbRef.put(swbFile);
+                const swbUrl = await swbRef.getDownloadURL();
+
+                // 3. Upload Screenshots (if any)
+                const screenshotUrls = {};
+                if (screenFiles.length > 0) {
+                    status.innerText = `Uploading Screenshots (0/${screenFiles.length})...`;
+                    for (let i = 0; i < screenFiles.length; i++) {
+                        const file = screenFiles[i];
+                        const screenRef = storage.ref(`screenshots/${Date.now()}_${file.name}`);
+                        await screenRef.put(file);
+                        const url = await screenRef.getDownloadURL();
+                        screenshotUrls[`screen_${i}`] = url;
+                        status.innerText = `Uploading Screenshots (${i+1}/${screenFiles.length})...`;
+                    }
+                }
+
+                status.innerText = "Saving Project Data...";
+
+                // 4. Save to Database
+                const newProjectRef = database.ref('projects').push();
+                await newProjectRef.set({
+                    projectName: name,
+                    projectDescription: desc,
+                    logoUrl: iconUrl,
+                    swbUrl: swbUrl,
+                    screenshotUrls: screenshotUrls,
+                    userId: user.uid,
+                    userName: user.displayName || 'Anonymous',
+                    userPhoto: user.photoURL || '',
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
+
+                status.innerText = "Upload Complete!";
+                alert("Project uploaded successfully!");
+                window.location.href = "index.html";
+
+            } catch (error) {
+                console.error("Upload failed:", error);
+                status.innerText = "Error: " + error.message;
+                submitBtn.disabled = false;
+            }
         });
     }
 });

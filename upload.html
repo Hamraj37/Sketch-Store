@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Upload Project - Sketch Store</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-storage-compat.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div class="detail-header">
+            <span class="material-icons back-btn" id="detail-back">arrow_back</span>
+            <h3>Upload Project</h3>
+        </div>
+
+        <div class="detail-content" style="align-items: stretch; text-align: left;">
+            <form id="upload-form">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Project Name</label>
+                    <input type="text" id="u-name" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Description</label>
+                    <textarea id="u-desc" rows="4" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-family: inherit; font-size: 16px;"></textarea>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Icon</label>
+                    <input type="file" id="u-icon" accept="image/*" required style="width: 100%;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Project File (.swb)</label>
+                    <input type="file" id="u-file" accept=".swb" required style="width: 100%;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Screenshots (Optional)</label>
+                    <input type="file" id="u-screens" accept="image/*" multiple style="width: 100%;">
+                </div>
+
+                <button type="submit" id="upload-submit-btn" class="fab static-btn" style="border: none; cursor: pointer; background: #3f51b5; color: white; font-size: 16px;">
+                    <span class="material-icons">cloud_upload</span> Upload Project
+                </button>
+                <p id="upload-status" style="text-align: center; margin-top: 15px; color: #666; font-weight: bold;"></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

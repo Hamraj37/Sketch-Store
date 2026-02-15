@@ -578,3 +578,10 @@ body.dark-mode .fab {
     background-color: #333;
     color: #bb86fc;
 }
+
+body.dark-mode input, 
+body.dark-mode textarea {
+    background-color: #333;
+    color: #e0e0e0;
+    border-color: #555;
+}
