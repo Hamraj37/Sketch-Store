@@ -153,12 +153,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update Profile in Menu
             const profilePic = document.getElementById('user-profile-pic');
             const userName = document.getElementById('user-name');
-            if (profilePic) profilePic.src = user.photoURL || 'https://via.placeholder.com/80';
+            if (profilePic) profilePic.src = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
             if (userName) userName.innerText = user.displayName || 'User';
 
             // Show Profile Pic in Header
             if (menuBtn) {
-                menuBtn.innerHTML = `<img src="${user.photoURL || 'https://via.placeholder.com/40'}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">`;
+                menuBtn.innerHTML = `<img src="${user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">`;
             }
         } else {
             // No user is signed in, show modal
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const profilePic = document.getElementById('user-profile-pic');
             const userName = document.getElementById('user-name');
-            if (profilePic) profilePic.src = 'https://via.placeholder.com/80';
+            if (profilePic) profilePic.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
             if (userName) userName.innerText = 'Guest';
 
             // Reset Header to Hamburger
