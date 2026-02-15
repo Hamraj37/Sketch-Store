@@ -142,6 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         else alert('Download link not available');
                     };
                 }
+            } else {
+                detailTitle.innerText = "Project Not Found";
+                document.getElementById('detail-desc').innerText = "The project you are looking for does not exist or has been removed.";
+                document.getElementById('detail-download-btn').style.display = 'none';
             }
         });
 

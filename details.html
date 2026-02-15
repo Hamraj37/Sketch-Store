@@ -3,46 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Project Details</title>
+    <title>Project Details - Sketch Store</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-storage-compat.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div class="app-container details-page">
         <div class="detail-header">
-            <span id="detail-back" class="back-btn material-icons">arrow_back</span>
-            <h3>Project Details</h3>
+            <span class="material-icons back-btn" id="detail-back">arrow_back</span>
+            <h3>Details</h3>
         </div>
-        
+
         <div class="detail-content">
-            <img id="detail-img" src="https://via.placeholder.com/100" alt="Project Logo" onerror="this.src='https://via.placeholder.com/100'">
+            <img id="detail-img" src="https://via.placeholder.com/100" alt="Project Icon">
             <h2 id="detail-title">Loading...</h2>
             
             <div class="publisher-section">
-                <img id="publisher-pic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
+                <img id="publisher-pic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Publisher">
                 <div class="publisher-info">
                     <span class="pub-label">Published by</span>
-                    <span id="detail-user"></span>
+                    <p id="detail-user">Unknown</p>
                 </div>
             </div>
-            
+
+            <p id="detail-desc">Please wait while we load the project details...</p>
+
             <div id="detail-screenshots" class="screenshots-container"></div>
-            
-            <p id="detail-desc"></p>
-            
-            <button id="detail-download-btn" class="fab static-btn"><span class="material-icons">download</span>&nbsp;Download</button>
+
+            <button id="detail-download-btn" class="fab static-btn">
+                <span class="material-icons">download</span> Download Project
+            </button>
         </div>
 
-        <!-- Comments Section -->
         <div class="comments-section">
             <h3 class="section-title">Comments</h3>
-            <div id="comments-list" class="comments-list"></div>
+            <div id="comments-list" class="comments-list">
+                <p style="color:#888; text-align:center; font-size: 14px;">Loading comments...</p>
+            </div>
             <div class="comment-input-area">
-                <input type="text" id="comment-input" placeholder="Add a comment..." autocomplete="off">
-                <button id="send-comment-btn" class="icon-btn"><span class="material-icons">send</span></button>
+                <input type="text" id="comment-input" placeholder="Write a comment...">
+                <button id="send-comment-btn" class="icon-btn">
+                    <span class="material-icons">send</span>
+                </button>
             </div>
         </div>
     </div>
