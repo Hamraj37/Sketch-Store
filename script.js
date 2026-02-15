@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('projectSearch');
     const logoutBtn = document.getElementById('logout-btn');
     const uploadBtn = document.getElementById('menu-upload-btn');
+    const menuLoginBtn = document.getElementById('menu-login-btn');
     const viewToggleBtn = document.getElementById('view-toggle-btn');
     let allProjects = [];
 
@@ -284,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show profile and logout
             if (profileSection) profileSection.style.display = 'flex';
             if (logoutBtn) logoutBtn.style.display = 'flex';
+            if (menuLoginBtn) menuLoginBtn.style.display = 'none';
             if (uploadBtn) uploadBtn.style.display = 'block';
 
             // Update Profile in Menu
@@ -303,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Hide profile and logout
             if (profileSection) profileSection.style.display = 'none';
             if (logoutBtn) logoutBtn.style.display = 'none';
+            if (menuLoginBtn) menuLoginBtn.style.display = 'flex';
             if (uploadBtn) uploadBtn.style.display = 'none';
 
             const profilePic = document.getElementById('user-profile-pic');
@@ -321,6 +324,15 @@ document.addEventListener('DOMContentLoaded', () => {
         loginBtn.addEventListener('click', () => {
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).catch((error) => alert(error.message));
+        });
+    }
+
+    if (menuLoginBtn) {
+        menuLoginBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(() => toggleMenu())
+                .catch((error) => alert(error.message));
         });
     }
 
