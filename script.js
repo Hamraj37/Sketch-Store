@@ -1,8 +1,8 @@
 // Wrap in DOMContentLoaded to ensure HTML is ready
 document.addEventListener('DOMContentLoaded', () => {
     // Check if config is loaded
-    if (typeof firebaseConfig === 'undefined') {
-        console.error("firebaseConfig not found. Please add <script src='config.js'></script> to your HTML.");
+    if (typeof firebaseConfig === 'undefined' || typeof githubConfig === 'undefined') {
+        console.error("Configuration not found. Please check config.js.");
         return;
     }
     
@@ -95,6 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const isDark = e.target.checked;
             document.body.classList.toggle('dark-mode', isDark);
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    }
+
+    // Reset GitHub Token Logic
+    const resetTokenBtn = document.getElementById('reset-token-btn');
+    if (resetTokenBtn) {
+        resetTokenBtn.addEventListener('click', () => {
+            localStorage.removeItem('github_token');
+            alert("GitHub Token cleared. You will be asked to enter it again on next upload.");
+            toggleMenu();
         });
     }
 
@@ -357,6 +367,20 @@ document.addEventListener('DOMContentLoaded', () => {
         uploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // GitHub Configuration
+            // WARNING: Exposing your Token in client-side code is a security risk. 
+            // Use a restricted token or a backend server for production.
+            let GITHUB_TOKEN = localStorage.getItem('github_token');
+            if (!GITHUB_TOKEN) {
+                GITHUB_TOKEN = prompt("Please enter your GitHub Personal Access Token to upload:");
+                if (GITHUB_TOKEN) {
+                    localStorage.setItem('github_token', GITHUB_TOKEN);
+                } else {
+                    alert("GitHub Token is required to upload.");
+                    return;
+                }
+            }
+            
             const user = auth.currentUser;
             if (!user) {
                 alert("You must be logged in to upload.");
@@ -380,17 +404,73 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = true;
                 status.innerText = "Uploading Icon...";
 
-                // 1. Upload Icon
-                const iconRef = storage.ref(`icons/${Date.now()}_${iconFile.name}`);
-                await iconRef.put(iconFile);
-                const iconUrl = await iconRef.getDownloadURL();
+                // Helper to convert file to Base64
+                const toBase64 = file => new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result.split(',')[1]);
+                    reader.onerror = error => reject(error);
+                });
 
-                status.innerText = "Uploading Project File...";
+                // 1. Upload Icon to GitHub
+                const iconBase64 = await toBase64(iconFile);
+                const safeIconName = `${Date.now()}_${iconFile.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+                const iconPath = `Logos/${safeIconName}`;
 
-                // 2. Upload SWB
-                const swbRef = storage.ref(`projects/${Date.now()}_${swbFile.name}`);
-                await swbRef.put(swbFile);
-                const swbUrl = await swbRef.getDownloadURL();
+                const iconResponse = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${iconPath}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: `Upload logo: ${name}`,
+                        content: iconBase64,
+                        branch: 'main'
+                    })
+                });
+
+                if (!iconResponse.ok) {
+                    const errData = await iconResponse.json();
+                    if (iconResponse.status === 401 || iconResponse.status === 403 || iconResponse.status === 404) {
+                        localStorage.removeItem('github_token');
+                    }
+                    throw new Error(`GitHub Icon Upload Error: ${errData.message}`);
+                }
+
+                const iconData = await iconResponse.json();
+                const iconUrl = iconData.content.download_url;
+
+                status.innerText = "Uploading Project File to GitHub...";
+
+                // 2. Upload SWB to GitHub
+                const swbBase64 = await toBase64(swbFile);
+                const safeFilename = `${Date.now()}_${swbFile.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+                const swbPath = `projects/${safeFilename}`;
+                
+                const ghResponse = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${swbPath}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: `Upload project: ${name}`,
+                        content: swbBase64,
+                        branch: 'main'
+                    })
+                });
+
+                if (!ghResponse.ok) {
+                    const errData = await ghResponse.json();
+                    if (ghResponse.status === 401 || ghResponse.status === 403 || ghResponse.status === 404) {
+                        localStorage.removeItem('github_token');
+                    }
+                    throw new Error(`GitHub Upload Error: ${errData.message}`);
+                }
+
+                const ghData = await ghResponse.json();
+                const swbUrl = ghData.content.download_url; // This is the raw link
 
                 // 3. Upload Screenshots (if any)
                 const screenshotUrls = {};

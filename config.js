@@ -8,3 +8,9 @@ const firebaseConfig = {
     appId: "1:140625293690:web:d5055f3da9e59b609da6c3",
     measurementId: "G-01HG0WPLRK"
 };
+
+const githubConfig = {
+    owner: "Hamraj37",
+    repo: "Sketch-Store"
+    // NOTE: Do NOT put your GitHub Token here. It will be prompted in the browser to keep it secure.
+};
