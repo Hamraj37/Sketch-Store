@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectList = document.getElementById('project-list');
     const slider = document.getElementById('recent-slider');
     const searchInput = document.getElementById('projectSearch');
+    const logoutBtn = document.getElementById('logout-btn');
     let allProjects = [];
 
     // Helper function to render the project list
@@ -139,10 +140,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check Auth State
     auth.onAuthStateChanged((user) => {
+        const profileSection = document.querySelector('.user-profile-section');
+
         if (user) {
             // User is signed in, hide modal
             if (loginModal) loginModal.style.display = 'none';
             
+            // Show profile and logout
+            if (profileSection) profileSection.style.display = 'flex';
+            if (logoutBtn) logoutBtn.style.display = 'block';
+
             // Update Profile in Menu
             const profilePic = document.getElementById('user-profile-pic');
             const userName = document.getElementById('user-name');
@@ -157,6 +164,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // No user is signed in, show modal
             if (loginModal) loginModal.style.display = 'flex';
             
+            // Hide profile and logout
+            if (profileSection) profileSection.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'none';
+
             const profilePic = document.getElementById('user-profile-pic');
             const userName = document.getElementById('user-name');
             if (profilePic) profilePic.src = 'https://via.placeholder.com/80';
@@ -179,6 +190,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeLoginBtn) {
         closeLoginBtn.addEventListener('click', () => {
             if (loginModal) loginModal.style.display = 'none';
+        });
+    }
+
+    // Logout Logic
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            auth.signOut().then(() => {
+                toggleMenu();
+            }).catch((error) => console.error("Logout error:", error));
         });
     }
 });
