@@ -58,13 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
     if (menuOverlay) menuOverlay.addEventListener('click', toggleMenu);
 
-    // Detail View Logic
-    const detailView = document.getElementById('detail-view');
+    // Back Button Logic (for details page)
     const backBtn = document.getElementById('detail-back');
-
     if (backBtn) {
         backBtn.addEventListener('click', () => {
-            detailView.classList.remove('active');
+            window.history.back();
         });
     }
 
@@ -72,13 +70,31 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         const card = e.target.closest('.project-card, .slider-item');
         if (card && card.dataset.id) {
-            const project = allProjects.find(p => p.id === card.dataset.id);
+            // Redirect to details page with ID
+            window.location.href = `details.html?id=${card.dataset.id}`;
+        }
+    });
+
+    // Check if we are on the details page
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('id');
+    const detailTitle = document.getElementById('detail-title');
+
+    if (projectId && detailTitle) {
+        database.ref('projects/' + projectId).once('value').then((snapshot) => {
+            const project = snapshot.val();
             if (project) {
                 document.getElementById('detail-img').src = project.logoUrl || 'https://via.placeholder.com/100';
                 document.getElementById('detail-title').innerText = project.projectName || 'Untitled';
                 document.getElementById('detail-user').innerText = project.userName || 'Unknown User';
                 document.getElementById('detail-desc').innerText = project.projectDescription || 'No description provided.';
-                
+
+                const screenshotsContainer = document.getElementById('detail-screenshots');
+                if (screenshotsContainer && project.screenshotUrls) {
+                    const urls = Object.values(project.screenshotUrls);
+                    screenshotsContainer.innerHTML = urls.map(url => `<img src="${url}" onerror="this.style.display='none'">`).join('');
+                }
+
                 const downloadBtn = document.getElementById('detail-download-btn');
                 if (downloadBtn) {
                     downloadBtn.onclick = () => {
@@ -86,10 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         else alert('Download link not available');
                     };
                 }
-                detailView.classList.add('active');
             }
-        }
-    });
+        });
+    }
 
     database.ref('projects').on('value', (snapshot) => {
         // Safety check: only run if elements exist
