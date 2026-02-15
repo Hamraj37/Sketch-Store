@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('recent-slider');
     const searchInput = document.getElementById('projectSearch');
     const logoutBtn = document.getElementById('logout-btn');
+    const uploadBtn = document.getElementById('menu-upload-btn');
     const viewToggleBtn = document.getElementById('view-toggle-btn');
     let allProjects = [];
 
@@ -261,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show profile and logout
             if (profileSection) profileSection.style.display = 'flex';
             if (logoutBtn) logoutBtn.style.display = 'block';
+            if (uploadBtn) uploadBtn.style.display = 'block';
 
             // Update Profile in Menu
             const profilePic = document.getElementById('user-profile-pic');
@@ -279,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Hide profile and logout
             if (profileSection) profileSection.style.display = 'none';
             if (logoutBtn) logoutBtn.style.display = 'none';
+            if (uploadBtn) uploadBtn.style.display = 'none';
 
             const profilePic = document.getElementById('user-profile-pic');
             const userName = document.getElementById('user-name');
