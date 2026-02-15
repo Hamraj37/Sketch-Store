@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.close-btn');
 
     function toggleMenu() {
-        sideMenu.classList.toggle('open');
-        menuOverlay.classList.toggle('open');
+        if (sideMenu) sideMenu.classList.toggle('open');
+        if (menuOverlay) menuOverlay.classList.toggle('open');
     }
 
     if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
@@ -197,9 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            auth.signOut().then(() => {
-                toggleMenu();
-            }).catch((error) => console.error("Logout error:", error));
+            toggleMenu(); // Close menu immediately
+            auth.signOut().catch((error) => console.error("Logout error:", error));
         });
     }
 });
