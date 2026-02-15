@@ -14,6 +14,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const projectList = document.getElementById('project-list');
     const slider = document.getElementById('recent-slider');
+    const searchInput = document.getElementById('projectSearch');
+    let allProjects = [];
+
+    // Helper function to render the project list
+    function renderList(items) {
+        projectList.innerHTML = items.map(data => `
+                <div class="project-card">
+                    <div class="project-icon">
+                        <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/60'">
+                    </div>
+                    <div class="project-info">
+                        <h3>${data.projectName || 'Untitled'}</h3>
+                        <p>${data.userName || 'Unknown User'}</p>
+                    </div>
+                </div>`).join('');
+    }
+
+    // Search Event Listener
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allProjects.filter(p => 
+                (p.projectName || '').toLowerCase().includes(term) ||
+                (p.userName || '').toLowerCase().includes(term)
+            );
+            renderList(filtered);
+        });
+    }
     
     // Menu Logic
     const menuBtn = document.querySelector('.menu-btn');
@@ -34,13 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Safety check: only run if elements exist
         if (!projectList || !slider) return;
 
-        projectList.innerHTML = ''; 
         slider.innerHTML = '';
         
-        const projects = [];
-        snapshot.forEach((child) => { projects.push(child.val()); });
+        allProjects = [];
+        snapshot.forEach((child) => { allProjects.push(child.val()); });
 
-        const reversed = [...projects].reverse();
+        const reversed = [...allProjects].reverse();
 
         // Populate Slider (Top 5 Recent)
         slider.innerHTML = reversed.slice(0, 5).map(data => `
@@ -49,15 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>`).join('');
 
         // Populate Main List
-        projectList.innerHTML = projects.map(data => `
-                <div class="project-card">
-                    <div class="project-icon">
-                        <img src="${data.logoUrl}" onerror="this.src='https://via.placeholder.com/60'">
-                    </div>
-                    <div class="project-info">
-                        <h3>${data.projectName || 'Untitled'}</h3>
-                        <p>${data.userName || 'Unknown User'}</p>
-                    </div>
-                </div>`).join('');
+        renderList(allProjects);
     });
 });
