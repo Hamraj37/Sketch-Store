@@ -1,5 +1,6 @@
 /* Center the entire application on the page */
 body {
+    touch-action: manipulation; /* Prevents double-tap to zoom */
     background-color: #f8f9fd; /* Target light background color */
     margin: 0;
     display: flex;
