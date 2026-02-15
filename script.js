@@ -108,6 +108,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Token Modal Logic
+    const tokenModal = document.getElementById('token-modal');
+    const saveTokenBtn = document.getElementById('save-token-btn');
+    const closeTokenBtn = document.getElementById('close-token-btn');
+    const tokenInput = document.getElementById('github-token-input');
+
+    if (saveTokenBtn) {
+        saveTokenBtn.addEventListener('click', () => {
+            const token = tokenInput.value.trim();
+            if (token) {
+                localStorage.setItem('github_token', token);
+                if (tokenModal) tokenModal.style.display = 'none';
+                alert("Token saved! You can now upload projects.");
+            } else {
+                alert("Please enter a valid token.");
+            }
+        });
+    }
+
+    if (closeTokenBtn) {
+        closeTokenBtn.addEventListener('click', () => {
+            if (tokenModal) tokenModal.style.display = 'none';
+        });
+    }
+
     // Back Button Logic (for details page)
     const backBtn = document.getElementById('detail-back');
     if (backBtn) {
@@ -372,13 +397,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Use a restricted token or a backend server for production.
             let GITHUB_TOKEN = localStorage.getItem('github_token');
             if (!GITHUB_TOKEN) {
-                GITHUB_TOKEN = prompt("Please enter your GitHub Personal Access Token to upload:");
-                if (GITHUB_TOKEN) {
-                    localStorage.setItem('github_token', GITHUB_TOKEN);
-                } else {
-                    alert("GitHub Token is required to upload.");
-                    return;
+                // Show modal if token is missing
+                if (tokenModal) {
+                    tokenModal.style.display = 'flex';
                 }
+                return; // Stop upload process until token is saved
             }
             
             const user = auth.currentUser;
