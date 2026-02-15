@@ -59,6 +59,7 @@
             <p id="user-name">Guest</p>
         </div>
         <a href="#">Home</a>
+        <a href="javascript:void(0)" id="menu-upload-btn" style="display: none;">Upload Project</a>
         <a href="#">My Projects</a>
         <a href="#">Settings</a>
         <a href="#">About</a>
@@ -115,24 +116,41 @@
     <script src="script.js"></script>
     <script>
         const addFab = document.getElementById('add-fab');
+        const menuUploadBtn = document.getElementById('menu-upload-btn');
         const uploadSheet = document.getElementById('upload-sheet');
         const sheetOverlay = document.getElementById('sheet-overlay');
+        const sideMenu = document.getElementById('side-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
 
         // Show FAB if logged in
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 addFab.style.display = 'flex';
+                if (menuUploadBtn) menuUploadBtn.style.display = 'block';
             } else {
                 addFab.style.display = 'none';
+                if (menuUploadBtn) menuUploadBtn.style.display = 'none';
             }
         });
 
         // Open Bottom Sheet
-        addFab.addEventListener('click', () => {
+        const openSheet = () => {
             uploadSheet.style.display = 'block';
             sheetOverlay.style.display = 'block';
             setTimeout(() => uploadSheet.classList.add('open'), 10);
-        });
+        };
+
+        addFab.addEventListener('click', openSheet);
+
+        if (menuUploadBtn) {
+            menuUploadBtn.addEventListener('click', () => {
+                // Close Side Menu
+                if (sideMenu) sideMenu.classList.remove('open');
+                if (menuOverlay) menuOverlay.classList.remove('open');
+                // Open Sheet
+                openSheet();
+            });
+        }
 
         // Close Bottom Sheet
         sheetOverlay.addEventListener('click', () => {
