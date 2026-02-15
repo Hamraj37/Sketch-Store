@@ -148,6 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const userName = document.getElementById('user-name');
             if (profilePic) profilePic.src = user.photoURL || 'https://via.placeholder.com/80';
             if (userName) userName.innerText = user.displayName || 'User';
+
+            // Show Profile Pic in Header
+            if (menuBtn) {
+                menuBtn.innerHTML = `<img src="${user.photoURL || 'https://via.placeholder.com/40'}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">`;
+            }
         } else {
             // No user is signed in, show modal
             if (loginModal) loginModal.style.display = 'flex';
@@ -156,6 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const userName = document.getElementById('user-name');
             if (profilePic) profilePic.src = 'https://via.placeholder.com/80';
             if (userName) userName.innerText = 'Guest';
+
+            // Reset Header to Hamburger
+            if (menuBtn) {
+                menuBtn.innerHTML = '☰';
+            }
         }
     });
 
