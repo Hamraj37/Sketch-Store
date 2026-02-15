@@ -138,21 +138,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (snapshot.exists()) {
                     const comments = [];
                     snapshot.forEach(child => {
-                        comments.push(child.val());
+                        const comment = child.val();
+                        comment.id = child.key;
+                        comments.push(comment);
                     });
-                    commentsList.innerHTML = comments.map(c => `
-                        <div class="comment-item">
+                    
+                    const currentUser = auth.currentUser;
+
+                    commentsList.innerHTML = comments.map(c => {
+                        const isOwner = currentUser && c.userId === currentUser.uid;
+                        const actions = isOwner ? `
+                            <div class="comment-actions">
+                                <span class="material-icons action-btn edit-btn" data-id="${c.id}">edit</span>
+                                <span class="material-icons action-btn delete-btn" data-id="${c.id}">delete</span>
+                            </div>` : '';
+                        return `
+                        <div class="comment-item" id="comment-${c.id}">
                             <img src="${c.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" class="comment-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
                             <div class="comment-body">
-                                <span class="comment-user">${c.userName || 'User'}</span>
+                                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                                    <span class="comment-user">${c.userName || 'User'}</span>
+                                    ${actions}
+                                </div>
                                 <p class="comment-text">${c.text}</p>
                             </div>
                         </div>
-                    `).join('');
+                    `}).join('');
                     // Scroll to bottom
                     commentsList.scrollTop = commentsList.scrollHeight;
                 } else {
                     commentsList.innerHTML = '<p style="color:#888; text-align:center; font-size: 14px;">No comments yet. Be the first!</p>';
+                }
+            });
+
+            // Edit and Delete Logic
+            commentsList.addEventListener('click', (e) => {
+                const target = e.target;
+                const id = target.dataset.id;
+                if (!id) return;
+
+                if (target.classList.contains('delete-btn')) {
+                    if (confirm('Delete this comment?')) {
+                        database.ref(`projects/${projectId}/comments/${id}`).remove();
+                    }
+                } else if (target.classList.contains('edit-btn')) {
+                    const commentItem = document.getElementById(`comment-${id}`);
+                    const textElem = commentItem.querySelector('.comment-text');
+                    const currentText = textElem.innerText;
+                    
+                    const newText = prompt('Edit your comment:', currentText);
+                    if (newText !== null && newText.trim() !== '') {
+                        database.ref(`projects/${projectId}/comments/${id}`).update({ text: newText });
+                    }
                 }
             });
 
